@@ -64,8 +64,17 @@ export function emotionalState(anxiety: number, confidence: number, e: Weights['
 }
 
 // Upper bound 1.0 by construction: emotion never raises risk.
-export const emotionMult = (deviation: number, e: Weights['emotion']): number =>
-  1 - e.max_discount * (clamp(deviation, 0, 100) / 100);
+//
+// Below deviated_min the state is reported as "calm", so nothing is discounted: a
+// report that says 情緒平穩 while quietly cutting the score is the kind of hidden
+// arithmetic this system exists to avoid. Above the cut the discount ramps from 0
+// to max_discount over the remaining range, so the multiplier is still continuous
+// — 24 and 26 do not get very different portfolios.
+export const emotionMult = (deviation: number, e: Weights['emotion']): number => {
+  const d = clamp(deviation, 0, 100);
+  if (d < e.deviated_min) return 1;
+  return 1 - e.max_discount * ((d - e.deviated_min) / (100 - e.deviated_min));
+};
 
 export const biasPenalty = (biasIndex: number, b: Weights['bias_penalty']): number =>
   clamp(b.k * (biasIndex - b.center), 0, b.max);

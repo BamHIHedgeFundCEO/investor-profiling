@@ -28,7 +28,12 @@ describe.each(scenarios.map((s) => [s.id, s] as const))('audit reconciles for %s
     near(a.competenceCap.floor + a.competenceCap.slope * a.competenceCap.competence, s.competence_cap);
     near(Math.min(a.baseline.capacity, a.baseline.willingness, a.baseline.competence_cap), s.baseline_risk);
     near(a.effective.baseline * a.effective.mult - a.effective.penalty, s.effective_risk);
-    near(1 - a.emotion.maxDiscount * (a.emotion.deviation / 100), s.emotion_mult);
+    // Piecewise: no discount at all below the deviation cut, so that a report saying
+    // 情緒平穩 and the arithmetic behind it agree.
+    const { deviation, deviatedMin, maxDiscount } = a.emotion;
+    const expected =
+      deviation < deviatedMin ? 1 : 1 - maxDiscount * ((deviation - deviatedMin) / (100 - deviatedMin));
+    near(expected, s.emotion_mult);
   });
 
   it('every behavior dimension ends at the score the report shows', async () => {

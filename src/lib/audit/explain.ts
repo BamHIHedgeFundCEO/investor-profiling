@@ -76,7 +76,7 @@ export interface Audit {
   baseline: { capacity: number; willingness: number; competence_cap: number; binding: Construct; baseline: number; headroom: number };
   behavior: BehaviorAudit[];
   interaction: InteractionAudit | null;
-  emotion: { anxiety: number; confidence: number; anxietyExcess: number; euphoriaExcess: number; deviation: number; maxDiscount: number; mult: number };
+  emotion: { anxiety: number; confidence: number; anxietyExcess: number; euphoriaExcess: number; deviation: number; maxDiscount: number; deviatedMin: number; mult: number };
   penalty: { biasIndex: number; center: number; k: number; penalty: number; max: number };
   effective: { baseline: number; mult: number; penalty: number; effective: number; targetVol: number };
   guardrails: { id: string; title: string; because: string[] }[];
@@ -236,6 +236,7 @@ export function explain(
       euphoriaExcess: Math.max(0, Math.min(1, (confidence - e.euphoria_cut) / (100 - e.euphoria_cut))),
       deviation,
       maxDiscount: e.max_discount,
+      deviatedMin: e.deviated_min,
       mult: scoring.emotion_mult,
     },
     penalty: {

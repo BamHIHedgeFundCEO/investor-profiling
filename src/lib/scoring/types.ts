@@ -36,9 +36,15 @@ export const BEHAVIOR_DIMS = [
 ] as const;
 export type BehaviorDim = (typeof BEHAVIOR_DIMS)[number];
 
-// bias_index is locked to these four. discipline is protective, confidence only
+// bias_index is locked to these three. discipline is protective, confidence only
 // matters alongside overconfidence, disposition is an execution-side bias.
-export const BIAS_DIMS = ['anxiety', 'loss_aversion', 'overconfidence', 'herding'] as const;
+//
+// anxiety is deliberately NOT here. It already drives emotion_mult, and counting it
+// again inside bias_index charged the same answer twice: on a respondent whose other
+// biases were high, going from calm to maximally anxious cost 4.1 points through the
+// multiplier and another 4.2 through the penalty — 8.3 off a baseline of 27 from one
+// dimension. Anxiety is a state, and the emotion path is where states belong.
+export const BIAS_DIMS = ['loss_aversion', 'overconfidence', 'herding'] as const;
 export type BiasDim = (typeof BIAS_DIMS)[number];
 
 // The only dimensions text analysis may adjust.

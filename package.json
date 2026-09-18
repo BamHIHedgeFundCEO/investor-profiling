@@ -10,7 +10,8 @@
     "test": "vitest run --typecheck",
     "agreement": "vite-node scripts/agreement.ts",
     "demo": "vite-node scripts/demo.ts",
-    "sensitivity": "vite-node scripts/sensitivity.ts"
+    "sensitivity": "vite-node scripts/sensitivity.ts",
+    "distribution": "vite-node scripts/distribution.ts"
   },
   "dependencies": {
     "echarts": "^6.1.0",

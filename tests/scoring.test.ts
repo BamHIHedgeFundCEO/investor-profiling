@@ -12,6 +12,7 @@ import { deriveTheoreticalRange } from '../src/lib/scoring/ranges';
 import { rawBehavior } from '../src/lib/scoring/behavior';
 import { enumerateComposite, scoreOverconfidence } from '../src/lib/scoring/rules';
 import { indexItems } from '../src/lib/scoring/util';
+import { BIAS_DIMS } from '../src/lib/scoring/types';
 import type { CompositeItem, OverconfidenceInteractionItem } from '../src/lib/scoring/types';
 import { itemBank, responses, run, textInput, weights } from './helpers';
 
@@ -99,6 +100,25 @@ describe('rule 2: emotion only discounts', () => {
     const e = emotionalState(100, 100, weights.emotion);
     expect(e.deviation).toBe(100);
   });
+
+  // The report calls these respondents 情緒平穩. A discount they are never told
+  // about would make the screen and the arithmetic two different stories.
+  it('a state reported as calm is not discounted at all', () => {
+    for (let d = 0; d < weights.emotion.deviated_min; d += 1) {
+      expect(emotionalState(weights.emotion.anxiety_cut + d * 0.6, 0, weights.emotion).state).toBe('calm');
+      expect(emotionMult(d, weights.emotion)).toBe(1);
+    }
+    // Exactly at the cut the discount is still zero — that is what makes the two
+    // pieces meet — and it starts biting immediately above it.
+    expect(emotionMult(weights.emotion.deviated_min, weights.emotion)).toBe(1);
+    expect(emotionMult(weights.emotion.deviated_min + 1, weights.emotion)).toBeLessThan(1);
+  });
+
+  it('the discount is continuous across the cut: 24 and 26 are not far apart', () => {
+    const a = emotionMult(weights.emotion.deviated_min - 1, weights.emotion);
+    const b = emotionMult(weights.emotion.deviated_min + 1, weights.emotion);
+    expect(Math.abs(a - b)).toBeLessThan(0.01);
+  });
 });
 
 describe('rule 3: bias penalty is small and capped', () => {
@@ -108,6 +128,18 @@ describe('rule 3: bias penalty is small and capped', () => {
     expect(biasPenalty(0, weights.bias_penalty)).toBe(0);
   });
   it('effective risk is clamped at 0', () => expect(effectiveRisk(0, 0.85, 10)).toBe(0));
+
+  // anxiety already drives emotion_mult. Putting it in bias_index too charged the
+  // same answer twice — 8.3 points off a baseline of 27 from one dimension.
+  it('anxiety is not in the bias index: it is a state, and states go through emotion', () => {
+    expect(BIAS_DIMS as readonly string[]).not.toContain('anxiety');
+    const s = run(responses({ Q08: 0, Q09: 0 }));
+    // bias_index is exactly the mean of the listed dimensions, so anxiety cannot
+    // reach it by any other route either.
+    const listed = BIAS_DIMS.map((d) => s.behavior[d].score);
+    expect(s.bias_index).toBeCloseTo(listed.reduce((a, b) => a + b, 0) / listed.length);
+    expect(s.behavior.anxiety.score).toBeGreaterThan(0);
+  });
 });
 
 describe('investor type and target_vol', () => {

@@ -182,13 +182,19 @@ const SECTIONS = [
             deviation ＝ 100 × max(兩者) ＝ <span class="font-medium">{{ n(audit.emotion.deviation) }}</span>
             （{{ s.emotional_state.state === 'calm' ? '平靜' : s.emotional_state.state === 'deviated' ? '偏離' : '高度偏離' }}）
           </p>
-          <p>
-            emotion_mult ＝ 1 − {{ audit.emotion.maxDiscount }} × ({{ n(audit.emotion.deviation) }} / 100) ＝
+          <p v-if="audit.emotion.deviation < audit.emotion.deviatedMin">
+            deviation &lt; {{ audit.emotion.deviatedMin }}，判定為平靜，不打折：emotion_mult ＝
+            <span class="font-medium">{{ n(audit.emotion.mult, 3) }}</span>
+          </p>
+          <p v-else>
+            emotion_mult ＝ 1 − {{ audit.emotion.maxDiscount }} × ({{ n(audit.emotion.deviation) }} −
+            {{ audit.emotion.deviatedMin }}) / (100 − {{ audit.emotion.deviatedMin }}) ＝
             <span class="font-medium">{{ n(audit.emotion.mult, 3) }}</span>
           </p>
           <p class="rounded-md bg-slate-50 px-3 py-2 text-xs leading-relaxed text-slate-600">
             取 max 不取和：恐慌與亢奮是互斥狀態，相加等於重複懲罰。上界固定為 1.0——情緒只會讓建議變保守，
-            不會讓一個人更有資格承擔風險。
+            不會讓一個人更有資格承擔風險。低於偏離門檻完全不打折，否則畫面寫「情緒平穩」、分數卻被扣，
+            說的跟算的就是兩件事。
           </p>
         </div>
 
