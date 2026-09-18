@@ -32,7 +32,7 @@ const outputs = [
 
     <ul class="mt-8 grid gap-3 sm:grid-cols-3">
       <li class="rounded-lg border border-slate-200 bg-white p-4">
-        <p class="font-medium text-slate-900">約 8 分鐘</p>
+        <p class="font-medium text-slate-900">約 10 分鐘</p>
         <p class="mt-1 text-sm text-slate-500">共三個部分，加上一題選填的 MBTI</p>
       </li>
       <li class="rounded-lg border border-slate-200 bg-white p-4">
