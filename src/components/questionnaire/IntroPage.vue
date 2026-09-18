@@ -4,6 +4,10 @@ import { scenarios } from '../../lib/demo';
 
 const survey = useSurveyStore();
 
+// The demonstration is for presenting the system, not for filling it in. It stays
+// out of the cover unless the URL asks for it: /?demo
+const demoVisible = typeof location !== 'undefined' && new URLSearchParams(location.search).has('demo');
+
 // Cover content only. Nothing here is read by scoring.
 const parts = [
   { n: '1', title: '財務狀況', desc: '這筆錢是什麼錢、你的收入與負擔' },
@@ -85,11 +89,11 @@ const outputs = [
         清除並重新開始
       </button>
     </div>
-    <p class="mt-6 text-xs leading-relaxed text-slate-400">結果僅供參考，不構成投資建議。</p>
-
     <!-- Demo entry. Pre-recorded responses, scored offline: a demonstration must not
-         depend on the venue's network or on anyone typing 25 answers live. -->
-    <div class="mt-8 border-t border-slate-200 pt-4">
+         depend on the venue's network or on anyone typing 25 answers live.
+         Hidden unless the URL asks for it (?demo), so a respondent never sees a
+         set of buttons that fill the questionnaire for them. -->
+    <div v-if="demoVisible" class="mt-8 border-t border-slate-200 pt-4">
       <p class="text-xs text-slate-400">展示模式（預錄資料，不需填答，離線計算）</p>
       <div class="mt-2 flex flex-wrap gap-2">
         <button

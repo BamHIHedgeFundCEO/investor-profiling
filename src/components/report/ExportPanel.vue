@@ -45,11 +45,5 @@ async function copy() {
         {{ copied ? '已複製' : '複製 JSON' }}
       </button>
     </div>
-    <details class="mt-4">
-      <summary class="cursor-pointer text-sm text-slate-500 select-none hover:text-slate-700">檢視 JSON</summary>
-      <div class="mt-2 max-h-96 overflow-auto rounded-lg bg-slate-900 p-4">
-        <pre class="text-xs leading-relaxed text-slate-100">{{ json }}</pre>
-      </div>
-    </details>
   </section>
 </template>

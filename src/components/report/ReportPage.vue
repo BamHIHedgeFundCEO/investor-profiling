@@ -101,6 +101,5 @@ const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 
         重新填寫
       </button>
     </div>
-    <p class="px-1 text-xs text-slate-400">結果僅供參考，不構成投資建議。</p>
   </div>
 </template>

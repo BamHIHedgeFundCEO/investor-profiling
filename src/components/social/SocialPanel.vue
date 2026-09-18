@@ -91,11 +91,7 @@ function decline() {
         </div>
       </fieldset>
 
-      <p class="mt-5 rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-500">
-        按下送出即表示同意保存這份作答。不收姓名與 email，開放式回答在離開瀏覽器前會先移除金額、年齡與聯絡方式。
-      </p>
-
-      <div class="mt-4 flex flex-wrap items-center gap-3">
+      <div class="mt-6 flex flex-wrap items-center gap-3">
         <button
           type="button"
           class="rounded-md bg-teal-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-teal-800 disabled:cursor-not-allowed disabled:bg-slate-300"
