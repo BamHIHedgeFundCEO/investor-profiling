@@ -64,7 +64,7 @@ describe('rendered narratives state the same facts in every tone', () => {
         expect(JSON.stringify(n)).not.toMatch(/\{\w+\}/);
         expect(n.summary).toContain(v.effective);
         expect(n.summary).toContain(v.type_zh);
-        expect(n.summary).toContain(v.target_vol);
+        expect(n.summary).toContain(v.baseline);
         expect(n.binding).toContain(v.binding_value);
         expect(n.contradiction === null).toBe(rendered[0]!.contradiction === null);
         if (n.contradiction) {

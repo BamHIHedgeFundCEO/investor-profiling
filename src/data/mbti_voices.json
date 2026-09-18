@@ -1,0 +1,70 @@
+{
+  "version": "1.0.0",
+  "note": "Sixteen opening lines, one per MBTI type. Voice only: each line says what the result IS and how it will be phrased. None of them may recommend an action, name an instrument, or imply a position size — the numbers and the guardrails below them come from the scoring layer alone, and a persona that contradicts them is worse than no persona. Enforced by tests/voice.test.ts.",
+  "voices": {
+    "INTJ": {
+      "label": "建築師",
+      "opener": "以下是結構，不是安慰。短期雜訊在計分時已經被濾掉，剩下的是這筆錢的長期承受邊界。"
+    },
+    "INTP": {
+      "label": "邏輯學家",
+      "opener": "把下面這份結果當成一個待拆的模型：每個分數都有它的輸入、邊界與失效條件，不確定的地方都標出來了。"
+    },
+    "ENTJ": {
+      "label": "指揮官",
+      "opener": "重點先講：下面這個數字就是你的邊界，其餘都是它的註腳。"
+    },
+    "ENTP": {
+      "label": "辯論家",
+      "opener": "先講你會不舒服的那部分：這份評估不迎合直覺，它只指出直覺在哪裡站不住。"
+    },
+    "INFJ": {
+      "label": "提倡者",
+      "opener": "這份結果談的是你和這筆錢的關係——不只是能承受多少，也包括你希望它變成什麼樣子。"
+    },
+    "INFP": {
+      "label": "調停者",
+      "opener": "下面的數字不是在評價你。它想做的，是把每天盯盤的那份焦慮，換成一份可以放著不動的計畫。"
+    },
+    "ENFJ": {
+      "label": "主人公",
+      "opener": "每一份風險畫像背後都是一個人的計畫。以下是你的——包括它的強項，也包括它最容易動搖的時刻。"
+    },
+    "ENFP": {
+      "label": "競選者",
+      "opener": "來看看你的投資人格長什麼樣子。你的答案裡有幾個很有意思的地方，下面會一個一個指出來。"
+    },
+    "ISTJ": {
+      "label": "物流師",
+      "opener": "以下依序列出：分數、分數的來源、限制條件，以及對應的執行事項。每一項都可以往回追到你的作答。"
+    },
+    "ISFJ": {
+      "label": "守衛者",
+      "opener": "先說最重要的一件事：這份結果的目的是讓你晚上睡得著，不是讓數字最大化。"
+    },
+    "ESTJ": {
+      "label": "總經理",
+      "opener": "結論、依據、待辦，三段講完。下面每一條規則都是事先設定的，不是事後才補的。"
+    },
+    "ESFJ": {
+      "label": "執政官",
+      "opener": "這份評估用的是業界通行的那一套標準，不是臨時發明的。以下是它對你的判讀。"
+    },
+    "ISTP": {
+      "label": "鑑賞家",
+      "opener": "不談願景。以下是數字、觸發條件，以及它們在什麼情況下會失準。"
+    },
+    "ISFP": {
+      "label": "探險家",
+      "opener": "數據不會取代你的盤感，但它可以告訴你盤感在什麼時候會騙你。以下是這兩件事的交會處。"
+    },
+    "ESTP": {
+      "label": "企業家",
+      "opener": "直接講：下面這個數字決定你能玩多大。它不是來掃興的，是來讓你玩得久一點。"
+    },
+    "ESFP": {
+      "label": "表演者",
+      "opener": "你的投資人格出爐了。有幾個地方很亮眼，也有幾個地方會在你最開心的時候扯後腿——兩邊都寫在下面。"
+    }
+  }
+}

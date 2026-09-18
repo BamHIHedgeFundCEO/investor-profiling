@@ -3,7 +3,7 @@ import type { AlertReason, BehaviorDim, Construct, Flag, Signal } from '../scori
 
 export const TARGET_LABELS: Record<Target, string> = {
   btc: '比特幣',
-  ai: 'AI 概念股',
+  ai: '股票',
   gold: '黃金',
 };
 

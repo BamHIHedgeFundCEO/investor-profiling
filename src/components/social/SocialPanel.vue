@@ -17,8 +17,6 @@ const data = interestsData as {
 const survey = useSurveyStore();
 const picked = ref<string[]>([]);
 const pref = ref<ContactPref | null>(null);
-const consentResearch = ref(false);
-const consentMatching = ref(false);
 const state = ref<'editing' | 'sending' | 'done'>('editing');
 const outcome = ref<string>('');
 
@@ -26,15 +24,18 @@ const toggle = (id: string) => {
   picked.value = picked.value.includes(id) ? picked.value.filter((x) => x !== id) : [...picked.value, id];
 };
 
-const canSubmit = computed(() => consentResearch.value && state.value === 'editing');
+const canSubmit = computed(() => state.value === 'editing');
 
+// Pressing 送出 IS the consent — there is no separate checkbox to tick. The line
+// above the button says what gets sent, so the click is still informed; 不用，謝謝
+// sends nothing at all.
 async function submit() {
   state.value = 'sending';
   const result = await survey.submitSocial({
-    interests: consentMatching.value ? picked.value : [],
-    contact_pref: consentMatching.value && pref.value ? pref.value : undefined,
-    consent_matching: consentMatching.value,
-    consent_research: consentResearch.value,
+    interests: picked.value,
+    contact_pref: pref.value ?? undefined,
+    consent_matching: true,
+    consent_research: true,
   });
   outcome.value =
     result === 'saved' ? '已送出，謝謝。'
@@ -90,24 +91,9 @@ function decline() {
         </div>
       </fieldset>
 
-      <div class="mt-5 space-y-2 rounded-lg bg-slate-50 p-3 text-sm">
-        <label class="flex cursor-pointer items-start gap-2">
-          <input v-model="consentResearch" type="checkbox" class="mt-0.5 accent-teal-700" />
-          <span class="text-slate-700">
-            我同意把這份<span class="font-medium">匿名</span>作答提供作為課程研究資料。
-            <span class="mt-0.5 block text-xs text-slate-500">
-              不收姓名與 email；開放式回答在離開瀏覽器前會移除金額、年齡與聯絡方式。不勾選就不會上傳任何東西。
-            </span>
-          </span>
-        </label>
-        <label class="flex cursor-pointer items-start gap-2">
-          <input v-model="consentMatching" type="checkbox" class="mt-0.5 accent-teal-700" :disabled="!consentResearch" />
-          <span :class="consentResearch ? 'text-slate-700' : 'text-slate-400'">
-            我同意保存上面的興趣與互動意願，供未來的興趣連結使用。
-            <span class="mt-0.5 block text-xs text-slate-500">不勾選的話，興趣選項不會被儲存。</span>
-          </span>
-        </label>
-      </div>
+      <p class="mt-5 rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-500">
+        按下送出即表示同意保存這份作答。不收姓名與 email，開放式回答在離開瀏覽器前會先移除金額、年齡與聯絡方式。
+      </p>
 
       <div class="mt-4 flex flex-wrap items-center gap-3">
         <button

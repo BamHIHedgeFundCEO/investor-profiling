@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -55,7 +55,7 @@
         { "label": "無固定收入", "value": 0 },
         { "label": "接案或業績制", "value": 40 },
         { "label": "一般受薪", "value": 75 },
-        { "label": "公職或長期合約", "value": 100 }
+        { "label": "公職", "value": 100 }
       ]
     },
     {
@@ -71,12 +71,12 @@
     },
     {
       "item_id": "Q06", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "burden",
-      "text": "扶養與負債狀況？",
-      "why_we_ask": "扶養與還款是固定支出，會壓縮可承擔的風險。",
+      "text": "你每個月有沒有這兩種固定負擔？",
+      "why_we_ask": "有人靠你的收入生活、或每月要還貸款，都是不能停的支出，會壓縮你能承擔的風險。",
       "options": [
-        { "label": "有扶養，也有貸款", "value": 15 },
-        { "label": "有其中一項", "value": 55 },
-        { "label": "無扶養，也無貸款", "value": 100 }
+        { "label": "兩種都有：有人靠我的收入生活，也有貸款要還", "value": 15 },
+        { "label": "只有其中一種", "value": 55 },
+        { "label": "兩種都沒有", "value": 100 }
       ]
     },
     {
@@ -112,12 +112,12 @@
     },
     {
       "item_id": "Q10", "stage": 2, "type": "single_choice", "construct": "behavior",
-      "text": "朋友靠 AI 股賺了 30%，你只賺 5%，你會：",
+      "text": "朋友買股票賺了 30%，你只賺 5%，你會：",
       "options": [
-        { "label": "想問他買什麼，可能跟進", "deltas": { "herding": 30, "overconfidence": 5 } },
+        { "label": "問他買什麼，然後跟著買", "deltas": { "herding": 30, "overconfidence": 5 } },
         { "label": "有點不甘心，但不改變做法", "deltas": { "discipline": 12, "herding": 8 } },
-        { "label": "不影響，我們的風險承受度不同", "deltas": { "discipline": 20, "herding": -10 } },
-        { "label": "會檢視自己是不是太保守", "deltas": { "herding": 12, "discipline": 5 } }
+        { "label": "不影響，我們的目標和風險承受度不同", "deltas": { "discipline": 20, "herding": -10 } },
+        { "label": "去了解他買的是什麼，再用自己的標準決定要不要買", "deltas": { "discipline": 15, "herding": 2 } }
       ]
     },
     {
@@ -142,12 +142,12 @@
     },
     {
       "item_id": "Q12a", "stage": 2, "type": "sub_choice", "parent": "Q12",
-      "text": "你認為自己的長期報酬，能贏過多少比例的散戶？",
+      "text": "把 100 個跟你差不多的一般投資人排名，你覺得自己的長期報酬大概排在哪裡？",
       "options": [
-        { "label": "不到 50%", "code": 25 },
-        { "label": "50–70%", "code": 60 },
-        { "label": "70–90%", "code": 80 },
-        { "label": "90% 以上", "code": 95 }
+        { "label": "後半段（第 50 名之後）", "code": 25 },
+        { "label": "中間偏前（約第 30–50 名）", "code": 60 },
+        { "label": "前段（約第 10–30 名）", "code": 80 },
+        { "label": "最前面（前 10 名以內）", "code": 95 }
       ]
     },
     {

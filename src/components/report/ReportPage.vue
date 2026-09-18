@@ -12,6 +12,7 @@ import ExportPanel from './ExportPanel.vue';
 import type { ProfileRecord } from '../../lib/scoring/types';
 import { weights } from '../../lib/scoring/data';
 import { narrative, toneTemplates } from '../../lib/presentation/narrative';
+import { voiceFor } from '../../lib/presentation/voice';
 import { QUALITY_NOTICES } from '../../lib/presentation/labels';
 import { useSurveyStore } from '../../stores/survey';
 
@@ -29,6 +30,7 @@ const s = computed(() => props.profile.scoring_layer);
 const tone = computed(() => props.profile.presentation_layer.tone);
 const text = computed(() => narrative(s.value, tone.value, weights));
 const notices = computed(() => s.value.flags.flatMap((f) => (QUALITY_NOTICES[f] ? [QUALITY_NOTICES[f]] : [])));
+const voice = computed(() => voiceFor(props.profile.presentation_layer.mbti));
 const showAudit = ref(false);
 const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 'panic');
 </script>
@@ -39,6 +41,13 @@ const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 
       <p class="text-sm font-medium text-slate-500">分析結果</p>
       <h1 class="mt-1 text-2xl font-semibold text-slate-900">你的動態風險畫像</h1>
     </header>
+
+    <!-- The MBTI opener. Persona only — every number below it comes from the
+         scoring layer and is identical whatever type was entered. -->
+    <p v-if="voice" class="border-l-2 border-teal-600 py-0.5 pl-4 text-[15px] leading-relaxed text-slate-700 sm:text-base">
+      {{ voice.opener }}
+      <span class="mt-1 block text-xs text-slate-400">{{ voice.code }}·{{ voice.label }}</span>
+    </p>
 
     <ScenarioCompare v-if="pairedDemo" />
 
@@ -59,25 +68,30 @@ const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 
 
     <p class="px-1 text-sm text-slate-500">
       說明語氣：{{ toneTemplates.labels[tone] }}
-      <template v-if="profile.presentation_layer.mbti">（依你填的 MBTI {{ profile.presentation_layer.mbti }}）</template>。
-      語氣只改變措辭，分數與建議在任何語氣下都完全相同。
+      <template v-if="voice">（依你填的 MBTI {{ voice.code }}·{{ voice.label }}）</template>。
+      MBTI 只決定開場白與措辭，上面的分數、投資人分類與每一條護欄，在任何語氣下都完全相同。
     </p>
 
     <ExportPanel :profile="profile" />
 
     <SocialPanel v-if="!survey.demoId" />
 
-    <div>
-      <button
-        type="button"
-        class="text-sm text-slate-500 underline underline-offset-2 hover:text-slate-800"
-        :aria-expanded="showAudit"
-        @click="showAudit = !showAudit"
-      >
-        {{ showAudit ? '收起稽核面板' : '打開稽核面板：看每個分數怎麼來的' }}
-      </button>
-    </div>
-    <AuditPanel v-if="showAudit" :profile="profile" />
+    <!-- The audit trail is for the demonstration and the marker, not for a respondent:
+         it is the engine's working, and showing it to everyone buries the result.
+         Reachable only from demo mode, where explaining the machine is the point. -->
+    <template v-if="survey.demoId">
+      <div>
+        <button
+          type="button"
+          class="text-sm text-slate-500 underline underline-offset-2 hover:text-slate-800"
+          :aria-expanded="showAudit"
+          @click="showAudit = !showAudit"
+        >
+          {{ showAudit ? '收起稽核面板' : '打開稽核面板：看每個分數怎麼來的' }}
+        </button>
+      </div>
+      <AuditPanel v-if="showAudit" :profile="profile" />
+    </template>
 
     <div class="flex flex-wrap gap-3 pt-2">
       <button type="button" class="rounded-md px-4 py-2.5 text-slate-600 hover:bg-slate-200/60" @click="survey.goTo('mbti')">
@@ -87,6 +101,6 @@ const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 
         重新填寫
       </button>
     </div>
-    <p class="px-1 text-xs text-slate-400">本結果為課程作業的示範，僅供參考，不構成投資建議。</p>
+    <p class="px-1 text-xs text-slate-400">結果僅供參考，不構成投資建議。</p>
   </div>
 </template>

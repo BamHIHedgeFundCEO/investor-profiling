@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import type { ScoringLayer } from '../../lib/scoring/types';
 import { weights } from '../../lib/scoring/data';
-import { EMOTION_ZH, fmtPct, fmtScore, type Narrative } from '../../lib/presentation/narrative';
+import { EMOTION_ZH, fmtScore, type Narrative } from '../../lib/presentation/narrative';
 import { CONSTRUCT_LABELS, alertReasonLabel } from '../../lib/presentation/labels';
 
 const props = defineProps<{ s: ScoringLayer; text: Narrative }>();
@@ -33,7 +33,7 @@ const emotionClass = computed(
       </div>
       <div class="pb-1">
         <p class="text-2xl font-semibold text-teal-800 sm:text-3xl">{{ type.zh }}</p>
-        <p class="text-sm text-slate-500">{{ type.id }} · 目標年化波動度 {{ fmtPct(s.target_vol) }}</p>
+        <p class="text-sm text-slate-500">{{ type.id }}</p>
       </div>
     </div>
 

@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "labels": {
     "neutral": "中性",
     "analytical": "分析型",
@@ -9,7 +9,7 @@
   },
   "tones": {
     "neutral": {
-      "summary": "你的有效風險分數是 {effective}，屬於{type_zh}。長期承受度為 {baseline}，目前情緒狀態{emotion_zh}，對應的目標年化波動度約 {target_vol}。",
+      "summary": "你的有效風險分數是 {effective}，屬於{type_zh}。長期承受度為 {baseline}，目前情緒狀態{emotion_zh}。",
       "contradiction": {
         "capacity_higher": "你的財務條件支持較高風險（capacity {capacity}），但你的情境反應顯示你可能撐不過回撤（willingness {willingness}）。系統以較保守的一方為準。",
         "willingness_higher": "你願意承擔較高的風險（willingness {willingness}），但你的財務條件支持的程度較低（capacity {capacity}）。系統以較保守的一方為準。"
@@ -24,7 +24,7 @@
       "guardrails_none": "你的各項行為特徵都沒有達到「高」，因此不需要額外的執行規則，照原本的計畫執行即可。"
     },
     "analytical": {
-      "summary": "有效風險分數 {effective}（{type_zh}）＝長期承受度 {baseline}，再依情緒狀態（{emotion_zh}）與行為偏誤調整。對應目標年化波動度 {target_vol}。",
+      "summary": "有效風險分數 {effective}（{type_zh}）＝長期承受度 {baseline}，再依情緒狀態（{emotion_zh}）與行為偏誤調整。",
       "contradiction": {
         "capacity_higher": "capacity {capacity} 高於 willingness {willingness} 超過 25 分：財務上撐得住，但情境反應顯示你可能撐不過回撤。系統取兩者中較保守的一方，而不是平均——平均會把這個矛盾藏起來。",
         "willingness_higher": "willingness {willingness} 高於 capacity {capacity} 超過 25 分：你願意承擔的風險，超過財務條件能支持的程度。系統取兩者中較保守的一方，而不是平均——平均會把這個矛盾藏起來。"
@@ -39,7 +39,7 @@
       "guardrails_none": "焦慮、損失趨避、過度自信、從眾、處分效應皆未達「高」（65 分）的觸發門檻，因此沒有附加執行規則。"
     },
     "diplomatic": {
-      "summary": "從你的回答來看，你目前的情緒狀態{emotion_zh}，長期能承受的風險程度是 {baseline}。綜合起來，你的有效風險分數是 {effective}，屬於{type_zh}，適合年化波動度約 {target_vol} 的配置。",
+      "summary": "從你的回答來看，你目前的情緒狀態{emotion_zh}，長期能承受的風險程度是 {baseline}。綜合起來，你的有效風險分數是 {effective}，屬於{type_zh}。",
       "contradiction": {
         "capacity_higher": "你的財務狀況其實能承受更多風險（capacity {capacity}），但從你面對下跌的反應來看，真正遇到回撤時可能會很難受（willingness {willingness}）。所以系統選擇以比較保守的一方為準。",
         "willingness_higher": "你願意承擔更多風險（willingness {willingness}），但目前的財務狀況能支持的程度比較有限（capacity {capacity}）。所以系統選擇以比較保守的一方為準。"
@@ -54,7 +54,7 @@
       "guardrails_none": "你面對市場的反應大致平穩，各項行為特徵都沒有達到「高」，所以目前不需要額外的規則來幫你守住計畫。"
     },
     "sentinel": {
-      "summary": "評估結果：\n・有效風險分數：{effective}（{type_zh}）\n・長期承受度：{baseline}\n・目前情緒狀態：{emotion_zh}\n・目標年化波動度：{target_vol}",
+      "summary": "評估結果：\n・有效風險分數：{effective}（{type_zh}）\n・長期承受度：{baseline}\n・目前情緒狀態：{emotion_zh}",
       "contradiction": {
         "capacity_higher": "注意：財務條件（capacity {capacity}）與情境反應（willingness {willingness}）落差超過 25 分。\n・財務條件支持較高風險\n・情境反應顯示你可能撐不過回撤\n・處理方式：以較保守的一方為準",
         "willingness_higher": "注意：風險意願（willingness {willingness}）與財務條件（capacity {capacity}）落差超過 25 分。\n・你願意承擔較高風險\n・財務條件支持的程度較低\n・處理方式：以較保守的一方為準"
@@ -69,7 +69,7 @@
       "guardrails_none": "檢查結果：各項行為特徵皆未達「高」。\n處理方式：不需額外設定執行規則，依原計畫執行。"
     },
     "explorer": {
-      "summary": "{type_zh}，有效風險分數 {effective}。長期承受度 {baseline}，情緒狀態{emotion_zh}，年化波動度抓 {target_vol} 左右。",
+      "summary": "{type_zh}，有效風險分數 {effective}。長期承受度 {baseline}，情緒狀態{emotion_zh}。",
       "contradiction": {
         "capacity_higher": "財務撐得住（capacity {capacity}），但真的遇到回撤，你可能撐不住（willingness {willingness}）。系統照保守的那邊算。",
         "willingness_higher": "你敢衝（willingness {willingness}），但財務條件跟不上（capacity {capacity}）。系統照保守的那邊算。"

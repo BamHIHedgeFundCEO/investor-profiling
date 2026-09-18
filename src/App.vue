@@ -15,8 +15,8 @@ const survey = useSurveyStore();
 <template>
   <div class="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased">
     <header class="border-b border-slate-200 bg-white">
-      <div class="mx-auto flex h-14 max-w-5xl items-center px-4 sm:px-6">
-        <span class="font-semibold text-slate-900">投資人風險畫像</span>
+      <div class="mx-auto flex h-14 max-w-5xl items-center px-4 sm:px-6 lg:justify-center">
+        <span class="font-semibold text-slate-900">BamHI 理財機器人</span>
         <span class="ml-2 hidden text-sm text-slate-400 sm:inline">Digital Investor Profiling</span>
       </div>
       <div v-if="survey.step !== 'intro'" class="lg:hidden"><StepNav mode="bar" /></div>

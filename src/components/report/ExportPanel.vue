@@ -24,7 +24,7 @@ async function copy() {
   <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
     <h2 class="text-lg font-semibold text-slate-900">匯出結果</h2>
     <p class="mt-1 text-sm text-slate-500">
-      包含逐題作答、計分結果與說明語氣。<code class="text-xs">target_vol</code> 可直接提供給下一步的資產配置使用。
+      包含逐題作答、計分結果與說明語氣，可留存或提供給下一步的資產配置使用。
     </p>
     <div class="mt-4 flex flex-wrap gap-2">
       <button

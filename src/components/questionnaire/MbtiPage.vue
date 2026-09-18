@@ -2,6 +2,7 @@
 import NavBar from './NavBar.vue';
 import { useSurveyStore } from '../../stores/survey';
 import { MBTI_TYPES, parseMbti } from '../../lib/presentation/tone';
+import { VOICES } from '../../lib/presentation/voice';
 
 const survey = useSurveyStore();
 
@@ -30,7 +31,7 @@ function onChange(e: Event) {
         @change="onChange"
       >
         <option value="">不知道／不填</option>
-        <option v-for="t in MBTI_TYPES" :key="t" :value="t">{{ t }}</option>
+        <option v-for="t in MBTI_TYPES" :key="t" :value="t">{{ t }}·{{ VOICES[t].label }}</option>
       </select>
     </div>
 
