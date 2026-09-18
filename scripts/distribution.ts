@@ -31,10 +31,21 @@ const gauss = () => Math.sqrt(-2 * Math.log(rnd() || 1e-9)) * Math.cos(2 * Math.
 
 const NOISE = 0.15; // how inconsistently one respondent answers across items
 
-function respondent(theta: number): Responses {
+// A respondent has TWO independent latent positions, not one. Rule 4 of the
+// method separates slow variables (capacity, willingness, competence) from fast
+// ones (emotion and bias), and a simulation that drives both from a single theta
+// silently denies that separation: on the behavioural items the last option is
+// "再投入一些" / "很興奮", so a single-theta risk-taker was forced to be euphoric
+// and overconfident too, and then lost the points back through emotion_mult and
+// bias_penalty. That made the top investor type look structurally unreachable
+// when it was only unreachable inside the simulation.
+const isSlow = (i: SingleChoiceItem) => 'construct' in i && Boolean(i.construct);
+
+function respondent(slow: number, fast: number): Responses {
   const o: Responses = {};
   for (const i of choices) {
-    const t = Math.min(0.999, Math.max(0, theta + gauss() * NOISE));
+    const base = isSlow(i) ? slow : fast;
+    const t = Math.min(0.999, Math.max(0, base + gauss() * NOISE));
     o[i.item_id] = { selected_index: Math.floor(t * i.options.length) };
   }
   o.Q13 = { target: 'btc', text: '', quality: 'invalid' };
@@ -42,10 +53,19 @@ function respondent(theta: number): Responses {
   return o;
 }
 
-const N = Number(process.argv[2] ?? 6000);
+// How theta itself is distributed across the population. "uniform" assumes every
+// kind of person is equally common, which is a strong and probably wrong claim;
+// "normal" clusters respondents in the middle, the way a real client base does.
+// The shape of the type distribution is mostly inherited from this choice, which
+// is exactly why no threshold is ever calibrated against it.
+const SHAPE = process.argv.includes('--uniform') ? 'uniform' : 'normal';
+const theta = () =>
+  SHAPE === 'uniform' ? rnd() : Math.min(0.999, Math.max(0, 0.5 + gauss() * 0.22));
+
+const N = Number(process.argv.find((a) => /^\d+$/.test(a)) ?? 6000);
 const rows: ScoringLayer[] = [];
 for (let i = 0; i < N; i++) {
-  rows.push(compose({ responses: respondent(rnd()), itemBank, weights, guardrails, text: null }));
+  rows.push(compose({ responses: respondent(theta(), theta()), itemBank, weights, guardrails, text: null }));
 }
 
 const pctl = (a: number[], p: number) => [...a].sort((x, y) => x - y)[Math.floor(p * (a.length - 1))]!;
@@ -55,7 +75,9 @@ const line = (name: string, a: number[]) =>
       ` p90=${pctl(a, 0.9).toFixed(1)} p99=${pctl(a, 0.99).toFixed(1)} max=${pctl(a, 1).toFixed(1)}`,
   );
 
-console.log(`模擬 ${N} 份前後一致的作答（noise=${NOISE}，固定亂數種子）\n`);
+console.log(
+  `模擬 ${N} 份作答（theta=${SHAPE}，慢變數與快變數各自獨立抽樣，noise=${NOISE}，固定亂數種子）\n`,
+);
 line('capacity', rows.map((r) => r.capacity));
 line('willingness', rows.map((r) => r.willingness));
 line('competence', rows.map((r) => r.competence));
