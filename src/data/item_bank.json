@@ -1,5 +1,5 @@
 {
-  "version": "1.6.0",
+  "version": "1.7.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -318,8 +318,8 @@
       "options": [
         { "label": "沒有投資經驗", "value": 0 },
         { "label": "有投資，但當時已經離場", "value": 30 },
-        { "label": "有，持有到回檔結束", "value": 100 },
-        { "label": "有，當時停損出場", "value": 50, "deltas": { "loss_aversion": 15, "discipline": 5 } }
+        { "label": "有，當時停損出場", "value": 50, "deltas": { "loss_aversion": 15, "discipline": 5 } },
+        { "label": "有，持有到回檔結束", "value": 100 }
       ]
     },
     {

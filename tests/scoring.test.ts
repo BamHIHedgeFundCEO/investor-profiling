@@ -60,7 +60,7 @@ describe('rule 1: baseline is the minimum of three constraints', () => {
 
   it('competence is the quiz, the drawdown and the tenure, weighted separately', () => {
     // 2 of 4 correct; stopped out of a drawdown; 1–3 years in the market.
-    const s = run(responses({ Q19a: 1, Q19b: 0, Q19c: 2, Q19d: 1, Q20: 3, Q20b: 2 }));
+    const s = run(responses({ Q19a: 1, Q19b: 0, Q19c: 2, Q19d: 1, Q20: 2, Q20b: 2 }));
     expect(s.facets.knowledge).toBe(50);
     expect(s.facets.experience).toBe(50);
     expect(s.facets.tenure).toBe(50);
@@ -71,7 +71,7 @@ describe('rule 1: baseline is the minimum of three constraints', () => {
   // quiz answer right plus a stop-loss exit capped the respondent at 77.5 — short
   // of Aggressive by 2.5 points, no matter how wealthy or risk-tolerant they were.
   it('a half-competent respondent is no longer pinned just below the top band', () => {
-    const half = { Q19a: 1, Q19b: 3, Q19c: 2, Q19d: 3, Q20: 3, Q20b: 3 };
+    const half = { Q19a: 1, Q19b: 3, Q19c: 2, Q19d: 3, Q20: 2, Q20b: 3 };
     const s = run(responses({
       Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2,
       Q21: 3, Q15: 4, Q15b: 4, ...half,
@@ -219,7 +219,7 @@ describe('Q16 × Q17 reflection effect', () => {
   ];
   it.each(cases)('Q16=%i Q17=%i → loss_aversion +%i', (q16, q17, la, flagged) => {
     // Q08 hold, Q18 "1 萬", Q20 "持有到回檔結束" add no loss_aversion
-    const r = responses({ Q08: 2, Q18: 0, Q20: 2, Q16: q16, Q17: q17 });
+    const r = responses({ Q08: 2, Q18: 0, Q20: 3, Q16: q16, Q17: q17 });
     expect(rawBehavior(itemBank, r).raw.loss_aversion).toBe(la);
     expect(run(r).flags.includes('atypical_prospect_pattern')).toBe(flagged);
   });
@@ -297,7 +297,7 @@ describe('fast vs slow variables', () => {
 
 describe('Q20 stop-loss exit', () => {
   it('gives experience 50 plus loss_aversion +15 and discipline +5', () => {
-    const s = run(responses({ Q20: 3 }));
+    const s = run(responses({ Q20: 2 }));
     expect(s.facets.experience).toBe(50);
     expect(s.behavior.loss_aversion.evidence.some((e) => e.startsWith('Q20') && e.includes('+15'))).toBe(true);
     expect(s.behavior.discipline.evidence.some((e) => e.startsWith('Q20') && e.includes('+5'))).toBe(true);

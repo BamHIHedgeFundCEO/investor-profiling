@@ -46,7 +46,7 @@ describe('rendered narratives state the same facts in every tone', () => {
   const profiles = {
     contradiction: run(responses({ Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2, Q21: 0, Q15: 0, Q15b: 0 })),
     noExperience: run(responses({ Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2, Q21: 3, Q15: 4, Q15b: 4, Q19a: 1, Q19b: 1, Q20: 0 })),
-    noKnowledge: run(responses({ Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2, Q21: 3, Q15: 4, Q15b: 4, Q19a: 0, Q19b: 0, Q20: 2 })),
+    noKnowledge: run(responses({ Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2, Q21: 3, Q15: 4, Q15b: 4, Q19a: 0, Q19b: 0, Q20: 3 })),
     base: run(responses()),
   };
 
