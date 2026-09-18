@@ -14,7 +14,11 @@ import { RESPONSE_SCHEMA, SYSTEM_PROMPT, userPrompt } from './_prompt.js';
 import { stripPii } from '../src/lib/analyzer/pii.js';
 
 const MAX_CHARS = 2000;
-const DEFAULT_MODEL = 'gemini-2.5-flash';
+// gemini-2.5-flash returns 404 for keys issued after its retirement: the model
+// still appears in ListModels, but generateContent answers "no longer available
+// to new users". Pinned rather than tracking gemini-flash-latest, because the
+// agreement rates in the README are only reproducible against a fixed model.
+const DEFAULT_MODEL = 'gemini-3.6-flash';
 const TIMEOUT_MS = 12_000;
 
 interface Req {
