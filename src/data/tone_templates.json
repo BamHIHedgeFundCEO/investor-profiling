@@ -1,0 +1,87 @@
+{
+  "version": "1.1.0",
+  "labels": {
+    "neutral": "中性",
+    "analytical": "分析型",
+    "diplomatic": "外交型",
+    "sentinel": "守衛型",
+    "explorer": "探險型"
+  },
+  "tones": {
+    "neutral": {
+      "summary": "你的有效風險分數是 {effective}，屬於{type_zh}。長期承受度為 {baseline}，目前情緒狀態{emotion_zh}，對應的目標年化波動度約 {target_vol}。",
+      "contradiction": {
+        "capacity_higher": "你的財務條件支持較高風險（capacity {capacity}），但你的情境反應顯示你可能撐不過回撤（willingness {willingness}）。系統以較保守的一方為準。",
+        "willingness_higher": "你願意承擔較高的風險（willingness {willingness}），但你的財務條件支持的程度較低（capacity {capacity}）。系統以較保守的一方為準。"
+      },
+      "binding": {
+        "capacity": "目前的上限（{binding_value}）來自財務條件。若提高緊急預備金、或降低這筆錢占資產的比例，上限最多可再提高 {headroom} 分。",
+        "willingness": "目前的上限（{binding_value}）來自你的風險偏好。系統不會讓配置承擔超過你意願的風險。",
+        "competence_experience": "你的財務條件與風險偏好都支持更高的配置，目前的上限（{binding_value}）來自市場經驗不足。這個限制會隨著你實際經歷一次完整的市場週期而放寬，最多可再提高 {headroom} 分——它不是對你判斷力的評價。",
+        "competence_knowledge": "你的財務條件與風險偏好都支持更高的配置，目前的上限（{binding_value}）來自基礎知識題的結果。補足利率與債券價格、ETF 費用等基本概念後，上限最多可再提高 {headroom} 分——它不是對你判斷力的評價。"
+      },
+      "guardrails": "以下 {guardrail_count} 項機制，幫助你在市場波動時守住原本的計畫：",
+      "guardrails_none": "你的各項行為特徵都沒有達到「高」，因此不需要額外的執行規則，照原本的計畫執行即可。"
+    },
+    "analytical": {
+      "summary": "有效風險分數 {effective}（{type_zh}）＝長期承受度 {baseline}，再依情緒狀態（{emotion_zh}）與行為偏誤調整。對應目標年化波動度 {target_vol}。",
+      "contradiction": {
+        "capacity_higher": "capacity {capacity} 高於 willingness {willingness} 超過 25 分：財務上撐得住，但情境反應顯示你可能撐不過回撤。系統取兩者中較保守的一方，而不是平均——平均會把這個矛盾藏起來。",
+        "willingness_higher": "willingness {willingness} 高於 capacity {capacity} 超過 25 分：你願意承擔的風險，超過財務條件能支持的程度。系統取兩者中較保守的一方，而不是平均——平均會把這個矛盾藏起來。"
+      },
+      "binding": {
+        "capacity": "三個上限中，財務條件（{binding_value}）最低，因此由它決定。改善緊急預備金或降低這筆錢的占比，上限最多可提高 {headroom} 分。",
+        "willingness": "三個上限中，風險偏好（{binding_value}）最低，因此由它決定。系統不會讓配置承擔超過你意願的風險。",
+        "competence_experience": "三個上限中，知識經驗上限（{binding_value}）最低；財務條件與風險偏好都更高。主因是市場經驗不足，經歷一次完整市場週期後，上限最多可提高 {headroom} 分。這反映的是經驗，不是判斷力。",
+        "competence_knowledge": "三個上限中，知識經驗上限（{binding_value}）最低；財務條件與風險偏好都更高。主因是基礎知識題，補足利率與債券價格、ETF 費用等概念後，上限最多可提高 {headroom} 分。這反映的是知識，不是判斷力。"
+      },
+      "guardrails": "依行為指標觸發的 {guardrail_count} 項執行機制：",
+      "guardrails_none": "焦慮、損失趨避、過度自信、從眾、處分效應皆未達「高」（65 分）的觸發門檻，因此沒有附加執行規則。"
+    },
+    "diplomatic": {
+      "summary": "從你的回答來看，你目前的情緒狀態{emotion_zh}，長期能承受的風險程度是 {baseline}。綜合起來，你的有效風險分數是 {effective}，屬於{type_zh}，適合年化波動度約 {target_vol} 的配置。",
+      "contradiction": {
+        "capacity_higher": "你的財務狀況其實能承受更多風險（capacity {capacity}），但從你面對下跌的反應來看，真正遇到回撤時可能會很難受（willingness {willingness}）。所以系統選擇以比較保守的一方為準。",
+        "willingness_higher": "你願意承擔更多風險（willingness {willingness}），但目前的財務狀況能支持的程度比較有限（capacity {capacity}）。所以系統選擇以比較保守的一方為準。"
+      },
+      "binding": {
+        "capacity": "現在限制你的，是財務條件（{binding_value}）。等緊急預備金更充足、或這筆錢在資產中的比例降低後，上限最多可以再提高 {headroom} 分。",
+        "willingness": "現在限制你的，是你自己願意承擔的風險（{binding_value}）。系統會尊重這一點，不會讓配置超過你的意願。",
+        "competence_experience": "你的財務條件和意願都支持更高的配置，現在的上限（{binding_value}）只是因為還沒累積足夠的市場經驗。等你實際走過一次完整的市場週期，上限最多可以再提高 {headroom} 分——這不是在評價你的判斷力。",
+        "competence_knowledge": "你的財務條件和意願都支持更高的配置，現在的上限（{binding_value}）來自基礎知識題的結果。補上利率與債券價格、ETF 費用這些基本概念後，上限最多可以再提高 {headroom} 分——這不是在評價你的判斷力。"
+      },
+      "guardrails": "為了讓你在市場起伏時更安心，建議搭配以下 {guardrail_count} 項機制：",
+      "guardrails_none": "你面對市場的反應大致平穩，各項行為特徵都沒有達到「高」，所以目前不需要額外的規則來幫你守住計畫。"
+    },
+    "sentinel": {
+      "summary": "評估結果：\n・有效風險分數：{effective}（{type_zh}）\n・長期承受度：{baseline}\n・目前情緒狀態：{emotion_zh}\n・目標年化波動度：{target_vol}",
+      "contradiction": {
+        "capacity_higher": "注意：財務條件（capacity {capacity}）與情境反應（willingness {willingness}）落差超過 25 分。\n・財務條件支持較高風險\n・情境反應顯示你可能撐不過回撤\n・處理方式：以較保守的一方為準",
+        "willingness_higher": "注意：風險意願（willingness {willingness}）與財務條件（capacity {capacity}）落差超過 25 分。\n・你願意承擔較高風險\n・財務條件支持的程度較低\n・處理方式：以較保守的一方為準"
+      },
+      "binding": {
+        "capacity": "目前上限：財務條件（{binding_value}）。\n放寬方式：提高緊急預備金，或降低這筆錢占資產的比例。\n可提高幅度：最多 {headroom} 分。",
+        "willingness": "目前上限：風險偏好（{binding_value}）。\n處理方式：配置不會超過你的風險意願。",
+        "competence_experience": "目前上限：知識經驗（{binding_value}），財務條件與風險偏好都更高。\n原因：市場經驗不足（這不是對判斷力的評價）。\n放寬方式：實際經歷一次完整的市場週期。\n可提高幅度：最多 {headroom} 分。",
+        "competence_knowledge": "目前上限：知識經驗（{binding_value}），財務條件與風險偏好都更高。\n原因：基礎知識題的結果（這不是對判斷力的評價）。\n放寬方式：補足利率與債券價格、ETF 費用等基本概念。\n可提高幅度：最多 {headroom} 分。"
+      },
+      "guardrails": "請依序設定以下 {guardrail_count} 項機制：",
+      "guardrails_none": "檢查結果：各項行為特徵皆未達「高」。\n處理方式：不需額外設定執行規則，依原計畫執行。"
+    },
+    "explorer": {
+      "summary": "{type_zh}，有效風險分數 {effective}。長期承受度 {baseline}，情緒狀態{emotion_zh}，年化波動度抓 {target_vol} 左右。",
+      "contradiction": {
+        "capacity_higher": "財務撐得住（capacity {capacity}），但真的遇到回撤，你可能撐不住（willingness {willingness}）。系統照保守的那邊算。",
+        "willingness_higher": "你敢衝（willingness {willingness}），但財務條件跟不上（capacity {capacity}）。系統照保守的那邊算。"
+      },
+      "binding": {
+        "capacity": "卡住你的是財務條件（{binding_value}）。預備金多一點、這筆錢占比低一點，最多還能往上 {headroom} 分。",
+        "willingness": "卡住你的是你自己的風險偏好（{binding_value}）。配置不會超過你想承擔的。",
+        "competence_experience": "財務和意願都夠，卡住你的是市場經驗（{binding_value}）。走過一次完整的市場週期，最多還能往上 {headroom} 分。跟你的判斷力無關。",
+        "competence_knowledge": "財務和意願都夠，卡住你的是基礎知識題（{binding_value}）。把利率與債券價格、ETF 費用弄懂，最多還能往上 {headroom} 分。跟你的判斷力無關。"
+      },
+      "guardrails": "{guardrail_count} 個幫你守住計畫的設定：",
+      "guardrails_none": "行為特徵都沒到「高」，不用加額外規則，照計畫走就好。"
+    }
+  }
+}

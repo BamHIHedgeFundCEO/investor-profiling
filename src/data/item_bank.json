@@ -1,0 +1,309 @@
+{
+  "version": "1.3.0",
+  "items": [
+    {
+      "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
+      "text": "你的年齡？",
+      "why_we_ask": "距離退休越遠，未來的工作收入越能彌補投資虧損。",
+      "options": [
+        { "label": "未滿 25 歲", "value": 100 },
+        { "label": "25–34 歲", "value": 85 },
+        { "label": "35–49 歲", "value": 65 },
+        { "label": "50–64 歲", "value": 40 },
+        { "label": "65 歲以上", "value": 20 }
+      ]
+    },
+    {
+      "item_id": "Q01", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "horizon",
+      "text": "這筆錢預計多久後會動用？",
+      "why_we_ask": "投資期限越長，越有時間等待市場回復。",
+      "options": [
+        { "label": "未滿 1 年", "value": 0 },
+        { "label": "1–3 年", "value": 25 },
+        { "label": "3–7 年", "value": 50 },
+        { "label": "7–15 年", "value": 75 },
+        { "label": "15 年以上", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q02", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "liquidity",
+      "text": "不動用這筆投資，你的存款可支應幾個月生活支出？",
+      "why_we_ask": "緊急預備金決定你在市場下跌時是否被迫賣出。",
+      "options": [
+        { "label": "不足 1 個月", "value": 0 },
+        { "label": "1–3 個月", "value": 33 },
+        { "label": "3–6 個月", "value": 67 },
+        { "label": "6 個月以上", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q03", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "concentration",
+      "text": "這筆錢佔你可投資淨資產的比例？",
+      "why_we_ask": "這筆錢佔比越高，一次虧損對整體財務的影響越大。",
+      "options": [
+        { "label": "超過 80%", "value": 0 },
+        { "label": "50–80%", "value": 33 },
+        { "label": "25–50%", "value": 67 },
+        { "label": "低於 25%", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q04", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "income_stability",
+      "text": "你的收入型態？",
+      "why_we_ask": "收入越穩定，越能承受投資帳面的短期波動。",
+      "options": [
+        { "label": "無固定收入", "value": 0 },
+        { "label": "接案或業績制", "value": 40 },
+        { "label": "一般受薪", "value": 75 },
+        { "label": "公職或長期合約", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q05", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "surplus",
+      "text": "每月結餘率（收入減支出，占收入的比例）？",
+      "why_we_ask": "每月結餘決定你能否持續投入，以及虧損後的復原速度。",
+      "options": [
+        { "label": "負值", "value": 0 },
+        { "label": "0–10%", "value": 33 },
+        { "label": "10–30%", "value": 67 },
+        { "label": "30% 以上", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q06", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "burden",
+      "text": "扶養與負債狀況？",
+      "why_we_ask": "扶養與還款是固定支出，會壓縮可承擔的風險。",
+      "options": [
+        { "label": "有扶養，也有貸款", "value": 15 },
+        { "label": "有其中一項", "value": 55 },
+        { "label": "無扶養，也無貸款", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q07", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "disruption",
+      "text": "未來 3 年因購屋、結婚、學費等需要動用這筆錢的機率？",
+      "why_we_ask": "計畫外的資金需求，可能迫使你在不利時點賣出。",
+      "options": [
+        { "label": "很可能", "value": 0 },
+        { "label": "可能", "value": 50 },
+        { "label": "極低", "value": 100 }
+      ]
+    },
+
+    {
+      "item_id": "Q08", "stage": 2, "type": "single_choice", "construct": "behavior",
+      "text": "你放了 50 萬進去。一個月後打開 App，剩 40 萬。同一天，你看到三則新聞說這波還沒跌完。你的第一個動作是：",
+      "options": [
+        { "label": "全部賣掉，先保住剩下的", "deltas": { "loss_aversion": 30, "anxiety": 25 } },
+        { "label": "賣掉一部分，降低部位", "deltas": { "loss_aversion": 12, "anxiety": 10 } },
+        { "label": "什麼都不做，照原計畫", "deltas": { "discipline": 18 } },
+        { "label": "再投入一些", "deltas": { "confidence": 15, "overconfidence": 8 } }
+      ]
+    },
+    {
+      "item_id": "Q09", "stage": 2, "type": "single_choice", "construct": "behavior",
+      "text": "最近市場波動大，你對自己的投資感受是：",
+      "options": [
+        { "label": "睡不太好，常常在看報價", "deltas": { "anxiety": 30 } },
+        { "label": "有點在意，但還好", "deltas": { "anxiety": 12 } },
+        { "label": "沒什麼感覺，很少看", "deltas": { "anxiety": -10, "discipline": 10 } },
+        { "label": "很興奮，覺得機會很多", "deltas": { "confidence": 20, "overconfidence": 12 } }
+      ]
+    },
+    {
+      "item_id": "Q10", "stage": 2, "type": "single_choice", "construct": "behavior",
+      "text": "朋友靠 AI 股賺了 30%，你只賺 5%，你會：",
+      "options": [
+        { "label": "想問他買什麼，可能跟進", "deltas": { "herding": 30, "overconfidence": 5 } },
+        { "label": "有點不甘心，但不改變做法", "deltas": { "discipline": 12, "herding": 8 } },
+        { "label": "不影響，我們的風險承受度不同", "deltas": { "discipline": 20, "herding": -10 } },
+        { "label": "會檢視自己是不是太保守", "deltas": { "herding": 12, "discipline": 5 } }
+      ]
+    },
+    {
+      "item_id": "AC1", "stage": 2, "type": "attention_check", "correct_index": 2,
+      "text": "為確認作答品質，本題請選擇第三個選項。",
+      "options": [
+        { "label": "第一個選項" },
+        { "label": "第二個選項" },
+        { "label": "第三個選項" },
+        { "label": "第四個選項" }
+      ]
+    },
+    {
+      "item_id": "Q11", "stage": 2, "type": "single_choice", "construct": "behavior",
+      "text": "你帳上獲利和虧損的部位，平均持有時間哪個比較長？",
+      "options": [
+        { "label": "虧損的長很多", "deltas": { "disposition": 30 } },
+        { "label": "差不多", "deltas": { "disposition": 10 } },
+        { "label": "獲利的長很多", "deltas": { "disposition": -10 } },
+        { "label": "目前沒有持股，無法比較", "deltas": {} }
+      ]
+    },
+    {
+      "item_id": "Q12a", "stage": 2, "type": "sub_choice", "parent": "Q12",
+      "text": "你認為自己的長期報酬，能贏過多少比例的散戶？",
+      "options": [
+        { "label": "不到 50%", "code": 25 },
+        { "label": "50–70%", "code": 60 },
+        { "label": "70–90%", "code": 80 },
+        { "label": "90% 以上", "code": 95 }
+      ]
+    },
+    {
+      "item_id": "Q12b", "stage": 2, "type": "sub_choice", "parent": "Q12",
+      "text": "過去一年，你平均每月交易幾次？",
+      "options": [
+        { "label": "0–1 次", "code": 1 },
+        { "label": "2–5 次", "code": 3.5 },
+        { "label": "6–15 次", "code": 10 },
+        { "label": "超過 15 次", "code": 20 }
+      ]
+    },
+    {
+      "item_id": "Q12", "stage": 2, "type": "composite", "rule": "overconfidenceInteraction",
+      "text": "過度自信交互項（Q12a 自評排名 × Q12b 交易頻率）",
+      "prompt": "以下兩題一起看，請依實際情況作答。",
+      "sub_items": ["Q12a", "Q12b"],
+      "declared_range": { "overconfidence": [0, 30], "confidence": [0, 25] },
+      "params": {
+        "rank_high": 70,
+        "freq_high": 5,
+        "freq_very_high": 15,
+        "score_both": 30,
+        "score_rank_only": 12,
+        "score_freq_only": 15,
+        "confidence_by_rank_option": [0, 8, 16, 25]
+      }
+    },
+    {
+      "item_id": "Q13", "stage": 2, "type": "open_text",
+      "text": "以下三個標的，選一個你最有看法的，說說你的想法，以及你會不會投資、為什麼。",
+      "hint": "沒有標準答案，我們想了解的是你的判斷方式。可以聊聊你怎麼看它的價值來源、你會或不會投入的原因、如果投入會放多少比例。",
+      "targets": ["btc", "ai", "gold"],
+      "default_target": "btc"
+    },
+    {
+      "item_id": "Q14", "stage": 2, "type": "open_text",
+      "text": "如果{target}明天跌 {drop}，你上面的看法會改變嗎？為什麼？",
+      "paired_with": "Q13",
+      "drop_by_target": { "btc": 0.40, "ai": 0.30, "gold": 0.20 }
+    },
+
+    {
+      "item_id": "Q21", "stage": 3, "type": "single_choice", "construct": "willingness", "facet": "goal",
+      "text": "這筆投資最主要的目標是？",
+      "options": [
+        { "label": "保住本金，不希望虧損", "value": 0 },
+        { "label": "穩定收益，可接受小幅波動", "value": 33 },
+        { "label": "平衡成長，願意承受一定波動", "value": 67 },
+        { "label": "積極增值，願意承受大幅波動", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q15", "stage": 3, "type": "single_choice", "construct": "willingness", "facet": "risk_tolerance",
+      "text": "如果這筆投資在 12 個月內出現帳面虧損，最多跌到多少，你仍能照原計畫持有？",
+      "options": [
+        { "label": "−5%", "value": 0 },
+        { "label": "−15%", "value": 25 },
+        { "label": "−25%", "value": 50 },
+        { "label": "−40%", "value": 75 },
+        { "label": "−50% 或更多", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q16", "stage": 3, "type": "sub_choice", "parent": "Q16_17",
+      "text": "情境一，二擇一：",
+      "options": [
+        { "label": "確定賺 5 萬", "code": "A" },
+        { "label": "50% 機率賺 12 萬，50% 機率不賺不賠", "code": "B" }
+      ]
+    },
+    {
+      "item_id": "Q17", "stage": 3, "type": "sub_choice", "parent": "Q16_17",
+      "text": "情境二，二擇一：",
+      "options": [
+        { "label": "確定賠 5 萬", "code": "A" },
+        { "label": "50% 機率不賠，50% 機率賠 12 萬", "code": "B" }
+      ]
+    },
+    {
+      "item_id": "Q16_17", "stage": 3, "type": "composite", "rule": "reflectionEffect",
+      "text": "反射效應（Q16 獲利區 × Q17 虧損區）",
+      "sub_items": ["Q16", "Q17"],
+      "declared_range": { "loss_aversion": [0, 25] },
+      "outcomes": {
+        "A|B": { "deltas": { "loss_aversion": 25 } },
+        "A|A": { "deltas": { "loss_aversion": 15 } },
+        "B|B": { "deltas": { "loss_aversion": 0 } },
+        "B|A": { "deltas": { "loss_aversion": 5 }, "flag": "atypical_prospect_pattern" }
+      }
+    },
+    {
+      "item_id": "Q18", "stage": 3, "type": "single_choice", "construct": "behavior",
+      "text": "有一個賭局：50% 機率輸 1 萬元，50% 機率贏錢。贏的金額至少要多少，你才願意玩？",
+      "options": [
+        { "label": "1 萬", "lambda": 1.0, "deltas": { "loss_aversion": 0 } },
+        { "label": "1.5 萬", "lambda": 1.5, "deltas": { "loss_aversion": 8 } },
+        { "label": "2 萬", "lambda": 2.0, "deltas": { "loss_aversion": 15 } },
+        { "label": "3 萬以上", "lambda": 3.0, "deltas": { "loss_aversion": 22 } },
+        { "label": "不論多少都不玩", "lambda": 5.0, "deltas": { "loss_aversion": 30 } }
+      ]
+    },
+    {
+      "item_id": "Q15b", "stage": 3, "type": "single_choice", "construct": "willingness", "facet": "risk_range",
+      "text": "假設投入 100 萬，一年後帳面價值可能落在以下哪個區間，你仍可以接受？",
+      "options": [
+        { "label": "95 萬 – 105 萬", "value": 0 },
+        { "label": "85 萬 – 118 萬", "value": 25 },
+        { "label": "75 萬 – 133 萬", "value": 50 },
+        { "label": "60 萬 – 167 萬", "value": 75 },
+        { "label": "50 萬 – 200 萬", "value": 100 }
+      ]
+    },
+    {
+      "item_id": "Q19a", "stage": 3, "type": "sub_choice", "parent": "Q19",
+      "text": "市場利率上升時，既有債券的價格通常會：",
+      "options": [
+        { "label": "上升" },
+        { "label": "下降", "correct": true },
+        { "label": "不變" },
+        { "label": "不確定" }
+      ]
+    },
+    {
+      "item_id": "Q19b", "stage": 3, "type": "sub_choice", "parent": "Q19",
+      "text": "ETF 的內扣費用（例如管理費）通常如何收取？",
+      "options": [
+        { "label": "從配息中扣除" },
+        { "label": "反映在基金淨值中", "correct": true },
+        { "label": "另外向投資人收款" },
+        { "label": "不確定" }
+      ]
+    },
+    {
+      "item_id": "Q19", "stage": 3, "type": "composite", "rule": "knowledgeQuiz",
+      "construct": "competence", "facet": "knowledge",
+      "text": "知識測驗答對題數",
+      "prompt": "兩題小測驗。不確定的話，直接選「不確定」就好。",
+      "sub_items": ["Q19a", "Q19b"],
+      "declared_range": {},
+      "value_by_correct": [0, 50, 100]
+    },
+    {
+      "item_id": "Q20", "stage": 3, "type": "single_choice", "construct": "competence", "facet": "experience",
+      "text": "你是否曾在實際持有部位時，經歷跌幅 20% 以上的完整市場回檔（例如 2020、2022 年）？",
+      "options": [
+        { "label": "沒有投資經驗", "value": 0 },
+        { "label": "有投資，但當時已經離場", "value": 30 },
+        { "label": "有，持有到回檔結束", "value": 100 },
+        { "label": "有，當時停損出場", "value": 50, "deltas": { "loss_aversion": 15, "discipline": 5 } }
+      ]
+    },
+
+    {
+      "item_id": "MBTI", "stage": 4, "type": "mbti",
+      "text": "你的 MBTI 類型？（選填，只用來調整結果頁的說明語氣，不影響任何分數）"
+    }
+  ]
+}

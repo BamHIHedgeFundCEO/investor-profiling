@@ -1,0 +1,97 @@
+{
+  "version": "1.3.0",
+  "capacity": {
+    "life_stage": 0.08,
+    "horizon": 0.18,
+    "liquidity": 0.17,
+    "concentration": 0.14,
+    "income_stability": 0.14,
+    "surplus": 0.11,
+    "burden": 0.09,
+    "disruption": 0.09
+  },
+  "willingness": {
+    "risk_tolerance": 0.45,
+    "risk_range": 0.3,
+    "goal": 0.25
+  },
+  "competence": {
+    "knowledge": 0.5,
+    "experience": 0.5
+  },
+  "competence_cap": {
+    "floor": 55,
+    "slope": 0.45
+  },
+  "emotion": {
+    "anxiety_cut": 40,
+    "euphoria_cut": 60,
+    "max_discount": 0.15,
+    "deviated_min": 25,
+    "highly_deviated_above": 60
+  },
+  "bias_penalty": {
+    "k": 0.2,
+    "center": 50,
+    "max": 10
+  },
+  "text_blend": {
+    "usable": 0.3,
+    "thin": 0.15,
+    "invalid": 0
+  },
+  "tiers": {
+    "mid_min": 36,
+    "high_min": 65
+  },
+  "thresholds": {
+    "inconsistency_gap": 20,
+    "capacity_willingness_gap": 25,
+    "framing_gap": 50
+  },
+  "framing_pair": [
+    "Q15",
+    "Q15b"
+  ],
+  "target_vol": {
+    "min": 0.05,
+    "span": 0.13
+  },
+  "investor_types": [
+    {
+      "id": "Conservative",
+      "zh": "保守型",
+      "lo": 0,
+      "hi": 20
+    },
+    {
+      "id": "Moderately Conservative",
+      "zh": "穩健保守型",
+      "lo": 20,
+      "hi": 40
+    },
+    {
+      "id": "Balanced",
+      "zh": "穩健型",
+      "lo": 40,
+      "hi": 60
+    },
+    {
+      "id": "Growth",
+      "zh": "成長型",
+      "lo": 60,
+      "hi": 80
+    },
+    {
+      "id": "Aggressive",
+      "zh": "積極型",
+      "lo": 80,
+      "hi": 101
+    }
+  ],
+  "quality": {
+    "min_duration_sec": 90,
+    "straight_line_run": 5,
+    "straight_line_min_options": 3
+  }
+}

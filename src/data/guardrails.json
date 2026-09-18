@@ -1,0 +1,181 @@
+{
+  "version": "1.3.0",
+  "rules": [
+    {
+      "id": "high_herding",
+      "when": [
+        {
+          "signal": "herding",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "quarterly_rebalance_locked",
+        "no_single_position_over_10pct"
+      ]
+    },
+    {
+      "id": "high_overconfidence",
+      "when": [
+        {
+          "signal": "overconfidence",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "trade_cooldown_48h",
+        "dca_enforced"
+      ]
+    },
+    {
+      "id": "high_anxiety",
+      "when": [
+        {
+          "signal": "anxiety",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "reduce_initial_position",
+        "review_in_3_months"
+      ]
+    },
+    {
+      "id": "high_loss_aversion",
+      "when": [
+        {
+          "signal": "loss_aversion",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "auto_rebalance",
+        "hide_daily_pnl"
+      ]
+    },
+    {
+      "id": "high_disposition",
+      "when": [
+        {
+          "signal": "disposition",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "auto_stop_loss_rule",
+        "hide_unrealized_pnl"
+      ]
+    },
+    {
+      "id": "high_belief_rigidity",
+      "when": [
+        {
+          "signal": "belief_rigidity",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "mandatory_thesis_review"
+      ]
+    },
+    {
+      "id": "high_price_anchoring",
+      "when": [
+        {
+          "signal": "price_anchoring",
+          "tier": "high"
+        }
+      ],
+      "add": [
+        "no_price_alerts"
+      ]
+    }
+  ],
+  "exemptions": [
+    {
+      "id": "professional_trader_pattern",
+      "note": "高自信＋高交易頻率＋高紀律＝專業交易者樣態，冷靜期護欄對其為噪音。只移除冷靜期，情緒折價照算。",
+      "when": [
+        {
+          "signal": "overconfidence",
+          "tier": "high"
+        },
+        {
+          "signal": "confidence",
+          "tier": "high"
+        },
+        {
+          "signal": "discipline",
+          "tier": "high"
+        }
+      ],
+      "remove": [
+        "trade_cooldown_48h"
+      ]
+    }
+  ],
+  "labels": {
+    "quarterly_rebalance_locked": {
+      "title": "固定每季再平衡",
+      "desc": "配置只在每季固定日期調整，避免看到別人賺錢就臨時改變做法。"
+    },
+    "no_single_position_over_10pct": {
+      "title": "單一標的不超過 10%",
+      "desc": "限制追逐熱門標的時的集中程度。"
+    },
+    "trade_cooldown_48h": {
+      "title": "下單前 48 小時冷靜期",
+      "desc": "新增的交易等待 48 小時後才執行，降低衝動交易。"
+    },
+    "dca_enforced": {
+      "title": "定期定額投入",
+      "desc": "以固定節奏分批投入，不憑當下判斷挑時點。"
+    },
+    "reduce_initial_position": {
+      "title": "降低初始投入比例",
+      "desc": "先投入部分資金，熟悉波動後再逐步增加。"
+    },
+    "review_in_3_months": {
+      "title": "3 個月後重新評估",
+      "desc": "情緒平穩後再評估一次，確認配置仍然合適。"
+    },
+    "auto_rebalance": {
+      "title": "自動再平衡",
+      "desc": "下跌後由系統自動調回目標比例，不需要自己決定何時加碼。"
+    },
+    "hide_daily_pnl": {
+      "title": "隱藏每日損益",
+      "desc": "只顯示月度績效，減少短期虧損帶來的壓力。"
+    },
+    "auto_stop_loss_rule": {
+      "title": "預先設定出場規則",
+      "desc": "事先決定虧損部位的處理條件，避免一直「等回本再賣」。"
+    },
+    "hide_unrealized_pnl": {
+      "title": "隱藏未實現損益",
+      "desc": "降低帳面損益對賣出決定的影響。"
+    },
+    "mandatory_thesis_review": {
+      "title": "定期檢視投資理由",
+      "desc": "每次大幅波動後，重新檢查當初的理由是否仍然成立。"
+    },
+    "no_price_alerts": {
+      "title": "關閉價格提醒",
+      "desc": "避免決策被特定價位牽動。"
+    }
+  },
+  "general_advice": [
+    {
+      "title": "寫下你的投資計畫",
+      "desc": "記下買進理由、預計持有多久、什麼情況會調整，市場波動時回頭對照。"
+    },
+    {
+      "title": "維持緊急預備金",
+      "desc": "保留數個月生活費的現金，避免在下跌時被迫賣出。"
+    },
+    {
+      "title": "每年檢視一次配置",
+      "desc": "在固定時間檢查比例是否偏離目標，而不是看新聞時才調整。"
+    }
+  ]
+}

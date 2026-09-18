@@ -1,0 +1,223 @@
+{
+  "_instructions": [
+    "共 15 組，由人工標註 expected 的四個欄位，填完後另存為 tests/fixtures.json 並 git commit 鎖住，之後不得為了遷就引擎而修改。",
+    "overconfidence / herding / belief_rigidity 填 low | mid | high；reasoning_mode 填 mechanism | narrative | authority | price_action。",
+    "overconfidence 的定義：語氣強度與論據強度的落差，與看多看空無關。",
+    "belief_rigidity：Q13 立場強烈、而 Q14 面對大跌完全不重新評估 → high；會重新檢視假設，或本來就是溫和立場 → low。",
+    "llm_only 為 true 的案例需要假設語氣或程度副詞處理，規則式 fallback 測試會自動跳過（跳過數量會顯示在報表中）。目前的值是建議，可以改。",
+    "note 可自由填寫判斷理由。",
+    "本專案的情緒指標（anxiety / loss_aversion / confidence）只做顯示、不進計分，因此不在標註範圍內；標註只涵蓋這四個會影響分數或護欄的欄位。"
+  ],
+  "fixtures": [
+    {
+      "id": "F01",
+      "target": "btc",
+      "q13": "比特幣絕對會漲到 50 萬鎂，現在不買以後一定後悔。我會把大部分的錢都放進去。",
+      "q14": "不會改變，跌 40% 正好加碼，長期一定會回來。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F02",
+      "target": "ai",
+      "q13": "AI 是未來，輝達一定會繼續漲，這波穩賺，我打算全部投進去。",
+      "q14": "不會，跌下來就是買點，我會買更多。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F03",
+      "target": "gold",
+      "q13": "黃金絕對不會跌，亂世一定要買黃金，這是保證賺的。",
+      "q14": "不可能跌 20%，就算跌我也照樣抱著。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F04",
+      "target": "btc",
+      "q13": "比特幣沒有現金流，價值主要來自稀缺性和大家的共識。我會放大約 5% 的資產當作高風險部位，因為它和股票的相關性不穩定。",
+      "q14": "會重新檢視。如果是因為監管或採用率下降造成的，我會減碼；如果只是整體市場恐慌，就維持原本的比例。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F05",
+      "target": "ai",
+      "q13": "AI 公司的營收成長很快，但本益比已經很高，估值可能已經反映了很多預期。我可能會用定期定額放 10% 左右，分散在幾家公司。",
+      "q14": "要看跌的原因。如果是資本支出沒有換來獲利，代表我的假設錯了，會降低比例。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F06",
+      "target": "gold",
+      "q13": "黃金沒有利息，持有的成本是放棄的利率。實質利率下降或美元走弱時比較有利，所以我會放 5% 到 10% 當避險。",
+      "q14": "不太會改變，我本來就預期它會波動，它在組合裡的角色是分散風險。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F07",
+      "target": "btc",
+      "q13": "我朋友去年買比特幣翻了三倍，群組裡大家都在買，網路上的大神也說還會漲，所以我也想跟著買一點。",
+      "q14": "應該會先問朋友怎麼看，如果大家都在賣，我可能也會賣。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F08",
+      "target": "ai",
+      "q13": "最近身邊同學都在買 AI 股，新聞跟 YouTuber 也一直推，感覺不買會落後，我會跟著買熱門的那幾檔。",
+      "q14": "看大家怎麼做吧，老師說跌的時候不要亂動，那我就先不動。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F09",
+      "target": "gold",
+      "q13": "我自己查過資料，黃金主要是在通膨和危機時有避險效果，長期報酬不高。我不太會因為別人買就跟著買，只放一小部分。",
+      "q14": "不會改變。跌 20% 對黃金來說不常見，我會先確認是不是利率大幅上升造成的。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F10",
+      "target": "ai",
+      "q13": "我主要看公司的財報，營收和毛利率有沒有持續成長。目前覺得估值偏高，所以先觀望，不急著進場。",
+      "q14": "如果跌 30% 而基本面沒變，我反而會考慮開始分批買。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": ""
+    },
+    {
+      "id": "F11",
+      "target": "btc",
+      "q13": "朋友都說比特幣會漲，但我覺得不合理，它沒有現金流，價格幾乎都是情緒推動的，所以我不會投資。",
+      "q14": "不會改變，跌 40% 反而證明它波動太大，不適合我。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": "邊界案例：出現社會歸因詞，但為獨立判斷"
+    },
+    {
+      "id": "F12",
+      "target": "ai",
+      "q13": "我很確定 AI 一定是長期趨勢，我會投入不少。不過如果崩盤，我應該會很怕。",
+      "q14": "會重新檢視我的假設哪裡錯了，可能是估值太高，我會先減碼一部分。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": true,
+      "note": "邊界案例：強烈立場但願意重新評估；含假設語氣的情緒描述"
+    },
+    {
+      "id": "F13",
+      "target": "btc",
+      "q13": "我不害怕它跌，波動本來就是這個資產的一部分。我看的是採用率和網路效應，不是價格，所以只放一小部分。",
+      "q14": "不會改變，我不擔心短期的跌幅。真正會讓我改變看法的是採用率長期停滯。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": "邊界案例：否定處理。『不害怕』『不擔心』命中情緒詞但語意相反，應視為低焦慮的正向證據"
+    },
+    {
+      "id": "F14",
+      "target": "ai",
+      "q13": "AI 股我覺得還可以吧，應該有機會，但我沒有特別強的看法，就是看大家在討論。",
+      "q14": "跌 30% 我就不買了，跌成那樣一定是有問題，我會先離開再說。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": "邊界案例：立場溫和但因為價格下跌就翻轉。僵固度低、價格錨定高——與 F01 的『立場強烈且不變』要能區分開"
+    },
+    {
+      "id": "F15",
+      "target": "ai",
+      "q13": "分析師說輝達的目標價還有很大空間，法人也一直在買超，所以我非常有信心，會投入相當大的比例。",
+      "q14": "不會改變。分析師都還沒下修目標價，跌只是在洗盤而已。",
+      "expected": {
+        "overconfidence": null,
+        "herding": null,
+        "reasoning_mode": null,
+        "belief_rigidity": null
+      },
+      "llm_only": false,
+      "note": "以他人說法為唯一依據，並用程度副詞加強；Q14 仍以同一個外部權威來拒絕重新評估"
+    }
+  ]
+}
