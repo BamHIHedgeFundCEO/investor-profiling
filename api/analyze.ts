@@ -9,6 +9,7 @@
 // FUNCTION_INVOCATION_FAILED with no application log. TypeScript's "bundler"
 // resolution maps the .js specifier back to the .ts source, so both sides agree.
 
+import { createHash } from 'node:crypto';
 import { clientIp, rateLimit } from './_rateLimit.js';
 import { RESPONSE_SCHEMA, SYSTEM_PROMPT, userPrompt } from './_prompt.js';
 import { stripPii } from '../src/lib/analyzer/pii.js';
@@ -124,9 +125,15 @@ export default async function handler(req: Req, res: Res) {
   // endpoint answers 200 either way, and only the scores differ.
   const model = process.env.GEMINI_MODEL || DEFAULT_MODEL;
 
+  // A digest of exactly what the analyzer saw. Not the text — a hash — so it leaks
+  // nothing, but it settles the one question a caller cannot otherwise answer:
+  // whether the server received the same bytes the client sent. Chinese text that
+  // arrives mangled produces a plausible-looking 200 with invented analysis.
+  const digest = createHash('sha256').update(`${safe.q13}\n${safe.q14}`).digest('hex').slice(0, 16);
+
   try {
     const scores = await callGemini(safe, apiKey, model);
-    return res.status(200).json({ analyzer: 'gemini', model, scores });
+    return res.status(200).json({ analyzer: 'gemini', model, digest, scores });
   } catch (e) {
     console.error('[analyze]', (e as Error).message);
     return res.status(502).json({ error: 'analyzer_failed' });
