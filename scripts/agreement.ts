@@ -131,13 +131,22 @@ async function main() {
   }
 
   let geminiLost = 0;
+  const disagreements: { id: string; 指標: string; 標註: string; Gemini: string; note: string }[] = [];
   if (args.includes('--gemini')) {
     const rows = [];
     console.log(`Gemini：${fixtures.length} 組，每組間隔 ${PACE_MS / 1000}s…`);
     for (const [i, f] of fixtures.entries()) {
       if (i > 0) await sleep(PACE_MS);
       try {
-        rows.push({ expected: f.expected, got: predicted(await withRetry(f.id, () => geminiScores(f))) });
+        const got = predicted(await withRetry(f.id, () => geminiScores(f)));
+        rows.push({ expected: f.expected, got });
+        // Which cases disagree matters more than the percentage: three misses out of
+        // fifteen is a number, but "all three are the same kind of miss" is a finding.
+        for (const d of DIMS) {
+          if (f.expected[d] !== null && f.expected[d] !== got[d]) {
+            disagreements.push({ id: f.id, 指標: d, 標註: String(f.expected[d]), Gemini: String(got[d]), note: f.note ?? '' });
+          }
+        }
       } catch (e) {
         geminiLost++;
         console.warn(`${f.id}: Gemini 失敗（${(e as Error).message}），該組不計入`);
@@ -149,6 +158,12 @@ async function main() {
 
   console.log(`\n標註案例 ${fixtures.length} 組；規則式跳過 llm_only ${skipped} 組（假設語氣／程度副詞，fallback 不處理）\n`);
   console.table(table);
+  if (disagreements.length) {
+    console.log(`\nGemini 與標註不一致的 ${disagreements.length} 處：`);
+    console.table(disagreements.map((d) => ({ 案例: d.id, 指標: d.指標, 標註: d.標註, Gemini: d.Gemini })));
+    for (const d of disagreements) if (d.note) console.log(`  ${d.id}: ${d.note}`);
+  }
+
   console.log('\n樣本數很小（每組 1 題約佔 8%），這張表用來說明方法的相對強弱，不是精確估計。');
 
   // Missing cases are not missing at random: they are the ones the rate limiter
