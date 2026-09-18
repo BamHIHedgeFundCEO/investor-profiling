@@ -121,9 +121,16 @@ export function analyzeRules(q13: OpenAnswer, q14: OpenAnswer): BehaviorScores {
   const holds = count(b, 'hold') > revisions;
   const belief_rigidity = holds ? stance : stance * 0.2;
 
+  // Evidence must cover every term that moved the number, not only the ones that
+  // raised it. A downstream gate withholds any reading it cannot quote for, so
+  // citing hedges and mechanisms is what lets a well-argued answer pull the score
+  // down at all. `a` is a prefix of `both`, so its indices carry over unchanged.
+  const stanceHits = [...hits(a, 'absolute'), ...hits(a, 'hedge')];
+  const socialHits = [...hits(both, 'social'), ...hits(both, 'independent')];
+
   return {
-    overconfidence: dim(overconfidence, evidence(a, hits(a, 'absolute'))),
-    herding: dim(herding, evidence(both, hits(both, 'social'))),
+    overconfidence: dim(overconfidence, evidence(both, [...stanceHits, ...hits(both, 'mechanism')])),
+    herding: dim(herding, evidence(both, socialHits)),
     reasoning_mode,
     belief_rigidity: clamp(belief_rigidity, 0, 100),
     price_anchoring: clamp(20 * priceNumbers(both) + 10 * Math.min(priceTerms(both).length, CAP), 0, 100),

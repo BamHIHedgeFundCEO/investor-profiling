@@ -100,7 +100,7 @@ export function compose(input: ComposeInput): ScoringLayer {
   const cap = competenceCap(competence, weights);
   const { baseline, gaps } = baselineRisk({ capacity, willingness, competence: cap }, weights.target_vol);
 
-  const { behavior, optionScores, textWeight, flags: behaviorFlags } = scoreBehavior(
+  const { behavior, optionScores, textWeight, textApplied, flags: behaviorFlags } = scoreBehavior(
     itemBank, responses, rangesFor(itemBank), weights, text,
   );
 
@@ -123,6 +123,7 @@ export function compose(input: ComposeInput): ScoringLayer {
           quality: { q13: quality.q13, q14: quality.q14 },
           text_weight: textWeight,
           option_scores: { overconfidence: optionScores.overconfidence, herding: optionScores.herding },
+          applied: { overconfidence: textApplied.overconfidence, herding: textApplied.herding },
           overconfidence: text.scores.overconfidence,
           herding: text.scores.herding,
           reasoning_mode: text.scores.reasoning_mode,

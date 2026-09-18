@@ -192,7 +192,9 @@ export function explain(
       text: nlp
         ? {
             score: nlp.score,
-            weight: ta!.text_weight,
+            // The effective weight, not the nominal one: a withheld reading is
+            // still shown here, but it moved the score by zero and says so.
+            weight: ta!.applied[dim as (typeof TEXT_BLENDED_DIMS)[number]] ? ta!.text_weight : 0,
             evidence: nlp.evidence,
             disagreement: Math.abs(optionScore - nlp.score),
           }

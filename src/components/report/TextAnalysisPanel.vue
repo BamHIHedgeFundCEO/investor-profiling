@@ -13,8 +13,18 @@ const tier = (n: number): Tier => tierOf(n, weights.tiers);
 const blended = computed(() =>
   t.value
     ? [
-        { label: '過度自信', option: tier(t.value.option_scores.overconfidence), text: t.value.overconfidence },
-        { label: '從眾', option: tier(t.value.option_scores.herding), text: t.value.herding },
+        {
+          label: '過度自信',
+          option: tier(t.value.option_scores.overconfidence),
+          text: t.value.overconfidence,
+          applied: t.value.applied.overconfidence,
+        },
+        {
+          label: '從眾',
+          option: tier(t.value.option_scores.herding),
+          text: t.value.herding,
+          applied: t.value.applied.herding,
+        },
       ]
     : [],
 );
@@ -30,6 +40,15 @@ const sentiment = computed(() =>
 
 const textTier = (d: DimScore) => (d.evidence.length ? TIER_LABELS[d.tier] : '無明顯訊號');
 const differs = (option: Tier, d: DimScore) => d.evidence.length > 0 && option !== d.tier;
+
+// Why a text reading was left out of the score. Said plainly, because a
+// respondent who disagrees with a verdict deserves to know it wasn't counted.
+const withheld = (r: { text: DimScore; applied: boolean }): string | null => {
+  if (r.applied) return null;
+  return r.text.evidence.length === 0
+    ? '文字裡沒有足夠訊號，這一項完全以選擇題計分。'
+    : '文字太短，判斷「有沒有講出理由」並不可靠，這一項完全以選擇題計分。';
+};
 </script>
 
 <template>
@@ -62,7 +81,7 @@ const differs = (option: Tier, d: DimScore) => d.evidence.length > 0 && option !
 
       <h3 class="mt-6 font-medium text-slate-900">選擇題與文字的交叉比對</h3>
       <p class="mt-0.5 text-xs text-slate-500">
-        以下兩項，文字分析占 {{ Math.round(t.text_weight * 100) }}%。兩種方法差距過大時，會列入行為提醒。
+        以下兩項，文字分析最多占 {{ Math.round(t.text_weight * 100) }}%，而且必須引用得出你的原文才會採計。兩種方法差距過大時，會列入行為提醒。
       </p>
       <ul class="mt-2 divide-y divide-slate-100">
         <li v-for="r in blended" :key="r.label" class="py-3">
@@ -71,9 +90,15 @@ const differs = (option: Tier, d: DimScore) => d.evidence.length > 0 && option !
             <span class="text-sm text-slate-600">選擇題 <b class="font-semibold text-slate-900">{{ TIER_LABELS[r.option] }}</b></span>
             <span class="text-sm text-slate-600">
               文字
-              <b class="font-semibold" :class="differs(r.option, r.text) ? 'text-amber-800' : 'text-slate-900'">{{ textTier(r.text) }}</b>
+              <b
+                class="font-semibold"
+                :class="!r.applied ? 'font-normal text-slate-400' : differs(r.option, r.text) ? 'text-amber-800' : 'text-slate-900'"
+                >{{ textTier(r.text) }}</b
+              >
+              <span v-if="!r.applied" class="text-slate-400">（未採計）</span>
             </span>
           </div>
+          <p v-if="withheld(r)" class="mt-1 text-sm leading-relaxed text-slate-500">{{ withheld(r) }}</p>
           <p v-for="q in r.text.evidence" :key="q" class="mt-1 text-sm leading-relaxed text-slate-600">「{{ q }}」</p>
         </li>
       </ul>

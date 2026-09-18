@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "capacity": {
     "life_stage": 0.08,
     "horizon": 0.18,
@@ -47,7 +47,8 @@
   "thresholds": {
     "inconsistency_gap": 20,
     "capacity_willingness_gap": 25,
-    "framing_gap": 50
+    "framing_gap": 50,
+    "depth_floor_chars": 40
   },
   "framing_pair": [
     "Q15",

@@ -182,6 +182,11 @@ export interface Weights {
     inconsistency_gap: number;
     capacity_willingness_gap: number;
     framing_gap: number;
+    // Overconfidence is scored as stance × (100 − depth). In a very short answer
+    // depth is necessarily 0 — not because the respondent has no reasons, but
+    // because the sentence has no room for them — so the text reading is
+    // mechanically inflated and is not used below this many characters.
+    depth_floor_chars: number;
   };
   framing_pair: [string, string];
   target_vol: { min: number; span: number };
@@ -267,6 +272,9 @@ export interface TextAnalysis {
   text_weight: number;
   // Option-only vs text-only readings of the two blended dimensions, for side-by-side display.
   option_scores: { overconfidence: number; herding: number };
+  // Whether each text reading was admitted into the score. False means it is
+  // shown for comparison only — see textApplies() in behavior.ts.
+  applied: { overconfidence: boolean; herding: boolean };
   overconfidence: DimScore;
   herding: DimScore;
   reasoning_mode: ReasoningMode;

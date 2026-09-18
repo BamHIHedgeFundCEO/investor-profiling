@@ -265,6 +265,46 @@ describe('text layer', () => {
     expect(withText.behavior.overconfidence.score).toBeCloseTo(oc * 0.7 + 90 * 0.3);
     expect(withText.behavior.anxiety.score).toBe(without.behavior.anxiety.score);
     expect(withText.text_analysis?.text_weight).toBe(0.3);
+    expect(withText.text_analysis?.applied).toEqual({ overconfidence: true, herding: true });
+  });
+
+  // Two gates on the text layer. Both exist because a text reading was once able
+  // to move a real respondent's score with nothing behind it.
+  it('a text score with no evidence does not move anything', () => {
+    const without = run(responses());
+    const s = run(responses(), textInput({ overconfidence: 90, herding: 10 }, []));
+    expect(s.behavior.overconfidence.score).toBe(without.behavior.overconfidence.score);
+    expect(s.behavior.herding.score).toBe(without.behavior.herding.score);
+    expect(s.text_analysis?.applied).toEqual({ overconfidence: false, herding: false });
+    // Still reported, so the report can show it and say it was not counted.
+    expect(s.text_analysis?.overconfidence.score).toBe(90);
+  });
+
+  it('an inconsistency flag needs a text reading that was actually counted', () => {
+    const base = run(responses()).behavior.herding.score;
+    const s = run(responses(), textInput({ herding: base + 25 }, []));
+    expect(s.flags).not.toContain('inconsistency_herding');
+  });
+
+  // overconfidence = stance × (100 − depth): a short answer has no room to state a
+  // mechanism, so depth is 0 by construction and brevity reads as overconfidence.
+  it('short text is not used for overconfidence, but is still used for herding', () => {
+    const short = { body: '大盤長期向上 所以投資股票' };
+    const without = run(responses({}, short));
+    const s = run(responses({}, short), textInput({ overconfidence: 100, herding: 10 }));
+    expect(s.behavior.overconfidence.score).toBe(without.behavior.overconfidence.score);
+    expect(s.behavior.herding.score).not.toBe(without.behavior.herding.score);
+    expect(s.text_analysis?.applied).toEqual({ overconfidence: false, herding: true });
+  });
+
+  it('the floor is the combined length of both answers, and it is data not code', () => {
+    const chars = weights.thresholds.depth_floor_chars;
+    const body = '字'.repeat(Math.ceil(chars / 2));
+    expect(run(responses({}, { body }), textInput({ overconfidence: 100 })).text_analysis?.applied.overconfidence)
+      .toBe(true);
+    const tooShort = '字'.repeat(Math.floor(chars / 2) - 1);
+    expect(run(responses({}, { body: tooShort }), textInput({ overconfidence: 100 })).text_analysis?.applied.overconfidence)
+      .toBe(false);
   });
 
   it('thin text uses weight 0.15', () => {
