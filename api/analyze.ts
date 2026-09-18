@@ -119,9 +119,14 @@ export default async function handler(req: Req, res: Res) {
   // Second pass of PII stripping: the client already strips before sending.
   const safe: AnalyzeRequest = { ...input, q13: stripPii(input.q13), q14: stripPii(input.q14) };
 
+  // The model name is echoed back deliberately. It is not a secret, and without it
+  // a GEMINI_MODEL set to something unintended is undiagnosable from outside: the
+  // endpoint answers 200 either way, and only the scores differ.
+  const model = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+
   try {
-    const scores = await callGemini(safe, apiKey, process.env.GEMINI_MODEL || DEFAULT_MODEL);
-    return res.status(200).json({ analyzer: 'gemini', scores });
+    const scores = await callGemini(safe, apiKey, model);
+    return res.status(200).json({ analyzer: 'gemini', model, scores });
   } catch (e) {
     console.error('[analyze]', (e as Error).message);
     return res.status(502).json({ error: 'analyzer_failed' });
