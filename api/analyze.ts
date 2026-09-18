@@ -1,9 +1,17 @@
 // Vercel serverless function. The API key lives only in environment variables and
 // never reaches the browser; the client calls this endpoint instead.
+//
+// The .js extensions below are load-bearing and must not be removed. package.json
+// declares "type": "module", and Vercel compiles api/*.ts per file rather than
+// bundling them, so these become real Node ESM specifiers at runtime. Node ESM
+// does not do extension resolution: an extensionless './_rateLimit' throws
+// ERR_MODULE_NOT_FOUND before the handler is ever entered, which surfaces as
+// FUNCTION_INVOCATION_FAILED with no application log. TypeScript's "bundler"
+// resolution maps the .js specifier back to the .ts source, so both sides agree.
 
-import { clientIp, rateLimit } from './_rateLimit';
-import { RESPONSE_SCHEMA, SYSTEM_PROMPT, userPrompt } from './_prompt';
-import { stripPii } from '../src/lib/analyzer/pii';
+import { clientIp, rateLimit } from './_rateLimit.js';
+import { RESPONSE_SCHEMA, SYSTEM_PROMPT, userPrompt } from './_prompt.js';
+import { stripPii } from '../src/lib/analyzer/pii.js';
 
 const MAX_CHARS = 2000;
 const DEFAULT_MODEL = 'gemini-2.5-flash';

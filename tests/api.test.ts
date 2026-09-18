@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import handler, { callGemini } from '../api/analyze';
 import { clientIp, rateLimit, resetRateLimit } from '../api/_rateLimit';
@@ -215,4 +217,24 @@ describe('Gemini client', () => {
     const out = await analyzeText(good, good, analyzer);
     expect(out?.analyzer).toBe('rule_based');
   });
+});
+
+// Regression guard for a failure that produced no application log at all: the
+// function crashed at module load on Vercel (FUNCTION_INVOCATION_FAILED /
+// ERR_MODULE_NOT_FOUND) because package.json is "type": "module" and Vercel
+// compiles api/*.ts per file instead of bundling them, so Node ESM — which does
+// no extension resolution — could not find './_rateLimit'. Bundlers are happy
+// without the extension, so nothing local catches it.
+describe('the serverless functions load under Node ESM', () => {
+  const files = readdirSync('api').filter((f) => f.endsWith('.ts'));
+
+  it('scans the api directory', () => expect(files.length).toBeGreaterThan(0));
+
+  for (const f of files) {
+    it(`${f}: every relative import carries an explicit .js extension`, () => {
+      const src = readFileSync(join('api', f), 'utf8');
+      const specifiers = [...src.matchAll(/(?:from|import)\s*['"](\.[^'"]*)['"]/g)].map((m) => m[1]!);
+      for (const s of specifiers) expect(s).toMatch(/\.js$/);
+    });
+  }
 });
