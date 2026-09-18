@@ -23,8 +23,8 @@ const survey = useSurveyStore();
         <p class="mt-1 text-sm text-slate-500">請選最接近你真實反應的選項</p>
       </li>
       <li class="rounded-lg border border-slate-200 bg-white p-4">
-        <p class="font-medium text-slate-900">財務資料不上傳</p>
-        <p class="mt-1 text-sm text-slate-500">收入與資產相關答案只在你的瀏覽器中計算</p>
+        <p class="font-medium text-slate-900">不經同意不上傳</p>
+        <p class="mt-1 text-sm text-slate-500">所有計分都在你的瀏覽器完成；是否提供作答資料，結果頁看完再決定</p>
       </li>
     </ul>
 

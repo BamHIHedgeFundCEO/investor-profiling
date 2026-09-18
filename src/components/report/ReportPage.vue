@@ -19,6 +19,8 @@ import { useSurveyStore } from '../../stores/survey';
 // demonstration, not part of what a respondent needs.
 const AuditPanel = defineAsyncComponent(() => import('../debug/AuditPanel.vue'));
 const ScenarioCompare = defineAsyncComponent(() => import('../debug/ScenarioCompare.vue'));
+// The social layer comes after the result, so it is also loaded after it.
+const SocialPanel = defineAsyncComponent(() => import('../social/SocialPanel.vue'));
 
 const props = defineProps<{ profile: ProfileRecord }>();
 const survey = useSurveyStore();
@@ -62,6 +64,8 @@ const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 
     </p>
 
     <ExportPanel :profile="profile" />
+
+    <SocialPanel v-if="!survey.demoId" />
 
     <div>
       <button

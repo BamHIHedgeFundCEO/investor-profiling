@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "note": "社交層選項。複選、不排序、不加權——它真的不計分，就不要做出計分的樣子。任何計分路徑都讀不到這個檔案。",
+  "interests": [
+    { "id": "racket_sports", "label": "網球／羽球／桌球" },
+    { "id": "gym", "label": "健身／重訓" },
+    { "id": "running", "label": "路跑／馬拉松／鐵人" },
+    { "id": "hiking", "label": "登山／戶外" },
+    { "id": "golf", "label": "高爾夫" },
+    { "id": "adventure", "label": "潛水／攀岩／滑雪" },
+    { "id": "tabletop", "label": "桌遊／撲克／圍棋" },
+    { "id": "gaming", "label": "電競／遊戲" },
+    { "id": "food_drink", "label": "咖啡／品酒／美食" },
+    { "id": "arts", "label": "閱讀／音樂／藝文" },
+    { "id": "photo_travel", "label": "攝影／旅行" },
+    { "id": "pets", "label": "寵物" }
+  ],
+  "contact_prefs": [
+    { "id": "online_only", "label": "只要線上討論" },
+    { "id": "open_to_offline", "label": "願意線下聚會" },
+    { "id": "undecided", "label": "先看看再說" }
+  ]
+}

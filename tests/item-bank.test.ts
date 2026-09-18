@@ -75,4 +75,17 @@ describe('layer isolation', () => {
       expect(code, f).not.toMatch(/mbti|presentation_layer|tone_templates/i);
     }
   });
+
+  // The social layer is the other thing that must never reach a score. Interests
+  // are collected for matching; letting them touch scoring would be exactly the
+  // kind of silent feature creep the three-layer split exists to prevent.
+  it('no scoring module references interests or the social layer', () => {
+    for (const f of readdirSync(dir)) {
+      if (f === 'types.ts') continue;
+      const code = readFileSync(join(dir, f), 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\/\/.*$/gm, '');
+      expect(code, f).not.toMatch(/interest|social_layer|consent_/i);
+    }
+  });
 });

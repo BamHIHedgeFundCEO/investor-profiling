@@ -310,14 +310,21 @@ export interface PresentationLayer {
   tone: Tone;
 }
 
+// Interests and contact preference. Never read by any scoring path — see the
+// ComposeInput guards below and tests/isolation.test-d.ts.
+export type ContactPref = 'online_only' | 'open_to_offline' | 'undecided';
+
 export interface SocialLayer {
   interests: string[];
-  open_to_offline?: boolean; // omitted unless consent_matching
+  contact_pref?: ContactPref; // omitted unless consent_matching
   consent_matching: boolean;
+  // Uploading anything at all is its own decision. Without this the record stays
+  // in the browser, which is what the intro page promises.
+  consent_research: boolean;
 }
 
 export interface ProfileRecord {
-  schema_version: '1.2';
+  schema_version: '1.3';
   item_bank_version: string;
   timestamp: string;
   responses: Responses;

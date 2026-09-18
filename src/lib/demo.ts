@@ -85,7 +85,7 @@ export async function runScenario(s: DemoScenario): Promise<ProfileRecord> {
 
   const mbti = (s.mbti || null) as MbtiType | null;
   return {
-    schema_version: '1.2',
+    schema_version: '1.3',
     item_bank_version: itemBank.version,
     timestamp: new Date().toISOString(),
     responses,

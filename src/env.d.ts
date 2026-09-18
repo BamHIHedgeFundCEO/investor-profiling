@@ -1,5 +1,8 @@
 interface ImportMetaEnv {
   readonly VITE_ANALYZER?: 'gemini' | 'rule_based';
+  // Optional. Both empty means nothing is ever uploaded.
+  readonly VITE_SUPABASE_URL?: string;
+  readonly VITE_SUPABASE_ANON_KEY?: string;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;

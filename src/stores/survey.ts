@@ -6,8 +6,10 @@ import { assessQuality } from '../lib/analyzer/quality';
 import { analyzeText } from '../lib/analyzer';
 import { toneFor } from '../lib/presentation/tone';
 import { runScenario, scenarioById } from '../lib/demo';
+import { saveProfile, type SaveResult } from '../lib/persistence/supabase';
 import type {
   ChoiceItem,
+  SocialLayer,
   CompositeItem,
   Item,
   MbtiType,
@@ -184,7 +186,7 @@ export const useSurveyStore = defineStore('survey', () => {
       meta: { duration_sec },
     });
     profile.value = {
-      schema_version: '1.2',
+      schema_version: '1.3',
       item_bank_version: itemBank.version,
       timestamp: new Date().toISOString(),
       responses: JSON.parse(JSON.stringify(responses.value)) as Responses, // structuredClone rejects reactive proxies
@@ -231,6 +233,25 @@ export const useSurveyStore = defineStore('survey', () => {
     goTo('intro');
   }
 
+  // ── Social layer (never read by scoring; see isolation tests) ───────────────
+
+  /** Records consent, then uploads — in that order, and only if consent was given. */
+  async function submitSocial(social: SocialLayer): Promise<SaveResult> {
+    if (!profile.value) return 'no_consent';
+    profile.value = { ...profile.value, social_layer: social };
+    // Demo scenarios are illustrations, not respondents; they never reach the database.
+    if (demoId.value) return 'no_consent';
+    return saveProfile(profile.value);
+  }
+
+  function declineSocial() {
+    if (!profile.value) return;
+    profile.value = {
+      ...profile.value,
+      social_layer: { interests: [], consent_matching: false, consent_research: false },
+    };
+  }
+
   function reset() {
     demoId.value = null;
     snapshot = null;
@@ -247,6 +268,6 @@ export const useSurveyStore = defineStore('survey', () => {
   return {
     responses, mbti, step, profile, hasProgress, analyzing, demoId,
     selected, choose, openAnswer, setText, setTarget, unanswered,
-    start, next, back, goTo, analyze, reset, loadDemo, exitDemo,
+    start, next, back, goTo, analyze, reset, loadDemo, exitDemo, submitSocial, declineSocial,
   };
 });
