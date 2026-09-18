@@ -7,7 +7,8 @@ import type { BehaviorScores, TextQuality } from '../src/lib/analyzer/types';
 export const BASE_PICKS: Record<string, number> = {
   Q00: 1, Q01: 2, Q02: 2, Q03: 2, Q04: 2, Q05: 2, Q06: 1, Q07: 1,
   Q08: 2, Q09: 1, Q10: 2, AC1: 2, Q11: 1, Q12a: 1, Q12b: 1,
-  Q21: 1, Q15: 2, Q16: 0, Q17: 0, Q18: 2, Q15b: 2, Q19a: 1, Q19b: 1, Q20: 2,
+  Q21: 1, Q15: 2, Q16: 0, Q17: 0, Q18: 2, Q15b: 2,
+  Q19a: 1, Q19b: 1, Q19c: 2, Q19d: 0, Q20: 2, Q20b: 2,
 };
 
 // Long enough to clear thresholds.depth_floor_chars, so tests that are about the

@@ -36,7 +36,8 @@ describe('rule 1: baseline is the minimum of three constraints', () => {
   it('end to end: no experience and no knowledge caps a wealthy risk-seeker at 55 (Balanced)', () => {
     const s = run(responses({
       Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2,
-      Q21: 3, Q15: 4, Q15b: 4, Q19a: 0, Q19b: 0, Q20: 0,
+      Q21: 3, Q15: 4, Q15b: 4,
+      Q19a: 0, Q19b: 0, Q19c: 0, Q19d: 1, Q20: 0, Q20b: 0,
     }));
     expect(s.competence).toBe(0);
     expect(s.competence_cap).toBe(55);
@@ -56,11 +57,25 @@ describe('rule 1: baseline is the minimum of three constraints', () => {
     expect(young.capacity - old.capacity).toBeCloseTo(0.08 * (100 - 20));
   });
 
-  it('competence uses Q19 correct count and Q20 experience', () => {
-    const s = run(responses({ Q19a: 1, Q19b: 0, Q20: 3 }));
+  it('competence is the quiz, the drawdown and the tenure, weighted separately', () => {
+    // 2 of 4 correct; stopped out of a drawdown; 1–3 years in the market.
+    const s = run(responses({ Q19a: 1, Q19b: 0, Q19c: 2, Q19d: 1, Q20: 3, Q20b: 2 }));
     expect(s.facets.knowledge).toBe(50);
     expect(s.facets.experience).toBe(50);
+    expect(s.facets.tenure).toBe(50);
     expect(s.competence).toBe(50);
+  });
+
+  // The wall this split exists to remove: under the old two-item competence, one
+  // quiz answer right plus a stop-loss exit capped the respondent at 77.5 — short
+  // of Aggressive by 2.5 points, no matter how wealthy or risk-tolerant they were.
+  it('a half-competent respondent is no longer pinned just below the top band', () => {
+    const half = { Q19a: 1, Q19b: 3, Q19c: 2, Q19d: 3, Q20: 3, Q20b: 3 };
+    const s = run(responses({
+      Q00: 0, Q01: 4, Q02: 3, Q03: 3, Q04: 3, Q05: 3, Q06: 2, Q07: 2,
+      Q21: 3, Q15: 4, Q15b: 4, ...half,
+    }));
+    expect(s.competence_cap).toBeGreaterThan(80);
   });
 });
 

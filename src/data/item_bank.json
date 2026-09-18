@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -282,13 +282,33 @@
       ]
     },
     {
+      "item_id": "Q19c", "stage": 3, "type": "sub_choice", "parent": "Q19",
+      "text": "一筆投資下跌 50% 之後，要回到原本的價值，需要上漲多少？",
+      "options": [
+        { "label": "50%" },
+        { "label": "75%" },
+        { "label": "100%", "correct": true },
+        { "label": "不確定" }
+      ]
+    },
+    {
+      "item_id": "Q19d", "stage": 3, "type": "sub_choice", "parent": "Q19",
+      "text": "把資金分散到很多檔股票，主要能降低哪一種風險？",
+      "options": [
+        { "label": "個別公司出問題的風險", "correct": true },
+        { "label": "整體市場下跌的風險" },
+        { "label": "兩種風險都能完全消除" },
+        { "label": "不確定" }
+      ]
+    },
+    {
       "item_id": "Q19", "stage": 3, "type": "composite", "rule": "knowledgeQuiz",
       "construct": "competence", "facet": "knowledge",
       "text": "知識測驗答對題數",
-      "prompt": "兩題小測驗。不確定的話，直接選「不確定」就好。",
-      "sub_items": ["Q19a", "Q19b"],
+      "prompt": "四題小測驗。不確定的話，直接選「不確定」就好。",
+      "sub_items": ["Q19a", "Q19b", "Q19c", "Q19d"],
       "declared_range": {},
-      "value_by_correct": [0, 50, 100]
+      "value_by_correct": [0, 25, 50, 75, 100]
     },
     {
       "item_id": "Q20", "stage": 3, "type": "single_choice", "construct": "competence", "facet": "experience",
@@ -298,6 +318,18 @@
         { "label": "有投資，但當時已經離場", "value": 30 },
         { "label": "有，持有到回檔結束", "value": 100 },
         { "label": "有，當時停損出場", "value": 50, "deltas": { "loss_aversion": 15, "discipline": 5 } }
+      ]
+    },
+    {
+      "item_id": "Q20b", "stage": 3, "type": "single_choice", "construct": "competence", "facet": "tenure",
+      "text": "你實際持有投資部位（股票、基金、ETF 等）大約多久了？",
+      "why_we_ask": "年資不等於實力，但待得夠久的人看過比較多種市場狀況。它和上一題分開計分，因為「撐過一次大跌」和「投資很多年」是兩件事。",
+      "options": [
+        { "label": "還沒開始", "value": 0 },
+        { "label": "不到 1 年", "value": 25 },
+        { "label": "1 到 3 年", "value": 50 },
+        { "label": "3 到 10 年", "value": 75 },
+        { "label": "超過 10 年", "value": 100 }
       ]
     },
 

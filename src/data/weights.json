@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "capacity": {
     "life_stage": 0.08,
     "horizon": 0.18,
@@ -16,8 +16,9 @@
     "goal": 0.25
   },
   "competence": {
-    "knowledge": 0.5,
-    "experience": 0.5
+    "knowledge": 0.4,
+    "experience": 0.35,
+    "tenure": 0.25
   },
   "competence_cap": {
     "floor": 55,

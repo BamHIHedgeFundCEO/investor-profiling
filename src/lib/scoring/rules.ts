@@ -79,7 +79,8 @@ export function evaluateComposite(item: CompositeItem, byId: Map<string, Item>, 
   return evaluateRule(item, subs, subs.map((s) => chosenIndex(responses, s.item_id)));
 }
 
-// Every possible result of a composite; small by construction (≤ 16 combos today).
+// Every possible result of a composite; small by construction (≤ 256 combos today,
+// from Q19's four four-option sub-questions).
 export function enumerateComposite(item: CompositeItem, byId: Map<string, Item>): RuleResult[] {
   const subs = subItems(item, byId);
   return cartesian(subs.map((s) => s.options.length)).map((picks) => evaluateRule(item, subs, picks));

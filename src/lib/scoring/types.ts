@@ -20,7 +20,11 @@ export type CapacityFacet =
   | 'life_stage' | 'horizon' | 'liquidity' | 'concentration' | 'income_stability'
   | 'surplus' | 'burden' | 'disruption';
 export type WillingnessFacet = 'risk_tolerance' | 'risk_range' | 'goal';
-export type CompetenceFacet = 'knowledge' | 'experience';
+// knowledge and experience are deliberately split three ways rather than two:
+// surviving one drawdown and having invested for years are different things, and
+// a two-item competence score was coarse enough that its 12 possible values left a
+// wall just below the top investor type. See README §21.
+export type CompetenceFacet = 'knowledge' | 'experience' | 'tenure';
 export type Facet = CapacityFacet | WillingnessFacet | CompetenceFacet;
 
 // The three slow-variable constraints; baseline_risk is their minimum.
