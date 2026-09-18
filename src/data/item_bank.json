@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -102,21 +102,23 @@
     },
     {
       "item_id": "Q09", "stage": 2, "type": "single_choice", "construct": "behavior",
-      "text": "最近市場波動大，你對自己的投資感受是：",
+      "text": "最近一個月，你查看投資帳戶的頻率、以及看完當下的心情，比較接近：",
+      "why_we_ask": "問「你覺得焦慮嗎」很難答得準，人通常低估自己的焦慮。改問看盤頻率這種具體行為，答案比較可靠。",
       "options": [
-        { "label": "睡不太好，常常在看報價", "deltas": { "anxiety": 30 } },
-        { "label": "有點在意，但還好", "deltas": { "anxiety": 12 } },
-        { "label": "沒什麼感覺，很少看", "deltas": { "anxiety": -10, "discipline": 10 } },
-        { "label": "很興奮，覺得機會很多", "deltas": { "confidence": 20, "overconfidence": 12 } }
+        { "label": "一天看好幾次，看完反而更煩", "deltas": { "anxiety": 30 } },
+        { "label": "一天看一次，有點在意", "deltas": { "anxiety": 12 } },
+        { "label": "幾週才看一次，沒什麼感覺", "deltas": { "anxiety": -10, "discipline": 10 } },
+        { "label": "一天看好幾次，但是在找加碼的時機", "deltas": { "confidence": 20, "overconfidence": 12 } }
       ]
     },
     {
       "item_id": "Q10", "stage": 2, "type": "single_choice", "construct": "behavior",
-      "text": "朋友買股票賺了 30%，你只賺 5%，你會：",
+      "text": "同事在群組貼出他這季的獲利截圖，數字比你高不少。接下來一週你最可能：",
+      "why_we_ask": "從眾不是看你有沒有參考別人，而是看你把別人的結果當成自己的理由，還是當成一條待查證的線索。",
       "options": [
-        { "label": "問他買什麼，然後跟著買", "deltas": { "herding": 30, "overconfidence": 5 } },
+        { "label": "私訊問他買什麼，然後跟著買", "deltas": { "herding": 30, "overconfidence": 5 } },
         { "label": "有點不甘心，但不改變做法", "deltas": { "discipline": 12, "herding": 8 } },
-        { "label": "不影響，我們的目標和風險承受度不同", "deltas": { "discipline": 20, "herding": -10 } },
+        { "label": "不受影響，我們的目標和風險承受度不同", "deltas": { "discipline": 20, "herding": -10 } },
         { "label": "去了解他買的是什麼，再用自己的標準決定要不要買", "deltas": { "discipline": 15, "herding": 2 } }
       ]
     },
