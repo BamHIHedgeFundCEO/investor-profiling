@@ -14,11 +14,19 @@ import { RESPONSE_SCHEMA, SYSTEM_PROMPT, userPrompt } from './_prompt.js';
 import { stripPii } from '../src/lib/analyzer/pii.js';
 
 const MAX_CHARS = 2000;
-// gemini-2.5-flash returns 404 for keys issued after its retirement: the model
-// still appears in ListModels, but generateContent answers "no longer available
-// to new users". Pinned rather than tracking gemini-flash-latest, because the
-// agreement rates in the README are only reproducible against a fixed model.
-const DEFAULT_MODEL = 'gemini-3.6-flash';
+// Two constraints decided this, neither of them visible from a model list:
+//
+//   1. gemini-2.5-flash answers 404 for keys issued after its retirement — it is
+//      still returned by ListModels, but generateContent says "no longer available
+//      to new users". Checking the catalogue is not checking availability.
+//   2. The free tier meters requests PER MODEL PER DAY, and gemini-3.6-flash gets
+//      20. The 15-case agreement table alone exhausts it, after which every
+//      respondent silently falls back to the rule-based analyzer. The lite model
+//      carries its own, far larger, daily allowance.
+//
+// Pinned rather than tracking the gemini-flash-latest alias: the agreement rates
+// in README section 16 are only reproducible against a fixed model.
+const DEFAULT_MODEL = 'gemini-3.1-flash-lite';
 const TIMEOUT_MS = 12_000;
 
 interface Req {

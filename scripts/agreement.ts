@@ -75,6 +75,31 @@ function score(rows: { expected: Fixture['expected']; got: ReturnType<typeof pre
   );
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+// Free-tier Gemini answers 429 (per-minute quota) and 503 (overloaded) freely, and
+// a first attempt at this table lost 13 of 15 cases to them. A table built from the
+// two that happened to get through is not a measurement of the analyzer — it is a
+// measurement of which calls won the rate limiter, so the calls are paced and retried.
+const PACE_MS = 6_000;
+const RETRIES = 4;
+
+async function withRetry<T>(id: string, fn: () => Promise<T>): Promise<T> {
+  let wait = 8_000;
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await fn();
+    } catch (e) {
+      const msg = (e as Error).message;
+      const retriable = /\b(429|500|502|503|504)\b/.test(msg);
+      if (!retriable || attempt > RETRIES) throw e;
+      console.warn(`  ${id}: ${msg}，${wait / 1000}s 後重試（第 ${attempt}/${RETRIES} 次）`);
+      await sleep(wait);
+      wait *= 2;
+    }
+  }
+}
+
 async function geminiScores(f: Fixture): Promise<BehaviorScores> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new Error('GEMINI_API_KEY 未設定');
@@ -83,7 +108,7 @@ async function geminiScores(f: Fixture): Promise<BehaviorScores> {
   const raw = await callGemini(
     { q13, q14, target: f.target, drop_pct: DROP[f.target] },
     key,
-    process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+    process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite',
   );
   return parseGeminiScores(raw, `${q13}\n${q14}`);
 }
@@ -105,12 +130,16 @@ async function main() {
     table[d] = { '規則式': r.pct === null ? '—' : `${r.pct}% (${r.hits}/${r.n})` };
   }
 
+  let geminiLost = 0;
   if (args.includes('--gemini')) {
     const rows = [];
-    for (const f of fixtures) {
+    console.log(`Gemini：${fixtures.length} 組，每組間隔 ${PACE_MS / 1000}s…`);
+    for (const [i, f] of fixtures.entries()) {
+      if (i > 0) await sleep(PACE_MS);
       try {
-        rows.push({ expected: f.expected, got: predicted(await geminiScores(f)) });
+        rows.push({ expected: f.expected, got: predicted(await withRetry(f.id, () => geminiScores(f))) });
       } catch (e) {
+        geminiLost++;
         console.warn(`${f.id}: Gemini 失敗（${(e as Error).message}），該組不計入`);
       }
     }
@@ -121,6 +150,19 @@ async function main() {
   console.log(`\n標註案例 ${fixtures.length} 組；規則式跳過 llm_only ${skipped} 組（假設語氣／程度副詞，fallback 不處理）\n`);
   console.table(table);
   console.log('\n樣本數很小（每組 1 題約佔 8%），這張表用來說明方法的相對強弱，不是精確估計。');
+
+  // Missing cases are not missing at random: they are the ones the rate limiter
+  // happened to reject. Reporting the survivors as if they were the sample would
+  // be the single most misleading thing this script could do.
+  if (geminiLost > 0) {
+    const kept = fixtures.length - geminiLost;
+    const fatal = geminiLost > fixtures.length / 5;
+    console.log(
+      `\n⚠ Gemini 有 ${geminiLost}/${fixtures.length} 組因配額或過載沒跑成，剩下 ${kept} 組。` +
+        `這 ${kept} 組不是隨機樣本，是「剛好沒被限速擋掉」的那幾組。` +
+        (fatal ? 'Gemini 欄不可引用，請重跑。' : '引用時須一併說明。'),
+    );
+  }
 
   if (args.includes('--consistency')) {
     const f = fixtures[0]!;

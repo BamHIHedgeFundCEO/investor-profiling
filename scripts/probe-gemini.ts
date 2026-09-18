@@ -18,7 +18,7 @@ function envLocal(): Record<string, string> {
 
 const env = envLocal();
 const key = process.env.GEMINI_API_KEY || env.GEMINI_API_KEY;
-const model = process.argv[2] || process.env.GEMINI_MODEL || env.GEMINI_MODEL || 'gemini-3.6-flash';
+const model = process.argv[2] || process.env.GEMINI_MODEL || env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
 if (!key) throw new Error('no GEMINI_API_KEY in environment or .env.local');
 
 const input = {
