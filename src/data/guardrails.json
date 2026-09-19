@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "rules": [
     {
       "id": "high_herding",
@@ -89,6 +89,18 @@
       "add": [
         "no_price_alerts"
       ]
+    },
+    {
+      "id": "low_discipline",
+      "when": [
+        {
+          "signal": "discipline",
+          "tier": "low"
+        }
+      ],
+      "add": [
+        "pre_trade_checklist"
+      ]
     }
   ],
   "exemptions": [
@@ -158,6 +170,10 @@
     "mandatory_thesis_review": {
       "title": "定期檢視投資理由",
       "desc": "每次大幅波動後，重新檢查當初的理由是否仍然成立。"
+    },
+    "pre_trade_checklist": {
+      "title": "下單前必填三個欄位",
+      "desc": "每筆買進或賣出，系統會先要求填寫：為什麼是現在、預計持有多久、什麼情況會讓你改變決定。填完才能送出。"
     },
     "no_price_alerts": {
       "title": "關閉價格提醒",

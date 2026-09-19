@@ -417,6 +417,21 @@ describe('guardrails', () => {
     expect(s.guardrails).toContain('trade_cooldown_48h');
   });
 
+  // discipline fed six items — more than any other dimension — and its only effect
+  // was the professional-trader exemption. It now carries a guardrail of its own,
+  // and like every other guardrail here it is an enforced mechanism rather than a
+  // habit to cultivate; the general advice block is what offers habits.
+  it('low discipline prescribes the pre-trade checklist', () => {
+    const s = run(responses({ Q08: 0, Q09: 0, Q10: 0, Q10b: 0, Q20: 0 }));
+    expect(s.behavior.discipline.tier).toBe('low');
+    expect(s.guardrails).toContain('pre_trade_checklist');
+    expect(s.guardrail_trace.find((t) => t.guardrail === 'pre_trade_checklist')?.because).toEqual(['discipline']);
+
+    const disciplined = run(responses({ Q08: 2, Q09: 2, Q10: 2, Q10b: 3, Q20: 2 }));
+    expect(disciplined.behavior.discipline.tier).not.toBe('low');
+    expect(disciplined.guardrails).not.toContain('pre_trade_checklist');
+  });
+
   it('high disposition drives execution-side guardrails only', () => {
     const s = run(responses({ Q11: 0, Q11b: 0 }));
     expect(s.behavior.disposition.tier).toBe('high');

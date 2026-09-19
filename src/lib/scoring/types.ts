@@ -214,7 +214,8 @@ export type GuardrailId =
   | 'reduce_initial_position' | 'review_in_3_months'
   | 'auto_rebalance' | 'hide_daily_pnl'
   | 'auto_stop_loss_rule' | 'hide_unrealized_pnl'
-  | 'mandatory_thesis_review' | 'no_price_alerts';
+  | 'mandatory_thesis_review' | 'no_price_alerts'
+  | 'pre_trade_checklist';
 
 // Signals a guardrail condition may test: behavior dimensions plus the two
 // guardrail-only text outputs.
