@@ -165,10 +165,10 @@ describe('theoretical ranges are derived from the item bank', () => {
       anxiety: { min: -10, max: 55 },
       loss_aversion: { min: 0, max: 100 },
       overconfidence: { min: 0, max: 55 },
-      herding: { min: -10, max: 30 },
-      discipline: { min: 0, max: 53 },
+      herding: { min: -15, max: 60 },
+      discipline: { min: 0, max: 78 },
       confidence: { min: 0, max: 60 },
-      disposition: { min: -10, max: 30 },
+      disposition: { min: -20, max: 60 },
     });
   });
 
@@ -418,9 +418,27 @@ describe('guardrails', () => {
   });
 
   it('high disposition drives execution-side guardrails only', () => {
-    const s = run(responses({ Q11: 0 }));
+    const s = run(responses({ Q11: 0, Q11b: 0 }));
     expect(s.behavior.disposition.tier).toBe('high');
     expect(s.guardrails).toEqual(expect.arrayContaining(['auto_stop_loss_rule', 'hide_unrealized_pnl']));
+  });
+
+  // herding and disposition each used to rest on one question, which meant one
+  // option of one question locked a guardrail on its own. Two items each now,
+  // and the worst answer to either one is not enough by itself.
+  it('no single question can trip a guardrail on its own', () => {
+    for (const [only, other, dim] of [
+      ['Q10', 'Q10b', 'herding'],
+      ['Q10b', 'Q10', 'herding'],
+      ['Q11', 'Q11b', 'disposition'],
+      ['Q11b', 'Q11', 'disposition'],
+    ] as const) {
+      const neutral = dim === 'herding' ? 2 : 2; // the option contributing 0 to that dimension
+      const s = run(responses({ [only]: 0, [other]: neutral }));
+      expect(s.behavior[dim].tier, `${only} alone`).not.toBe('high');
+    }
+    expect(run(responses({ Q10: 0, Q10b: 0 })).behavior.herding.tier).toBe('high');
+    expect(run(responses({ Q11: 0, Q11b: 0 })).behavior.disposition.tier).toBe('high');
   });
 });
 

@@ -1,5 +1,5 @@
 {
-  "version": "1.7.0",
+  "version": "1.8.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -93,11 +93,12 @@
     {
       "item_id": "Q08", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "你放了 50 萬進去。一個月後打開 App，剩 40 萬。同一天，你看到三則新聞說這波還沒跌完。你的第一個動作是：",
+      "why_we_ask": "這題沒有標準答案。四種做法在不同情況下都有人用，我們看的是你傾向哪一種，不是哪一種比較高明。",
       "options": [
-        { "label": "全部賣掉，先保住剩下的", "deltas": { "loss_aversion": 30, "anxiety": 25 } },
-        { "label": "賣掉一部分，降低部位", "deltas": { "loss_aversion": 12, "anxiety": 10 } },
-        { "label": "什麼都不做，照原計畫", "deltas": { "discipline": 18 } },
-        { "label": "再投入一些", "deltas": { "confidence": 15, "overconfidence": 8 } }
+        { "label": "先全部出場，等看清楚再決定要不要回來", "deltas": { "loss_aversion": 30, "anxiety": 25 } },
+        { "label": "先賣掉一部分，留一部分繼續放著", "deltas": { "loss_aversion": 12, "anxiety": 10 } },
+        { "label": "不動，這筆錢本來就打算放長期", "deltas": { "discipline": 18 } },
+        { "label": "再買一些，這種價位不常出現", "deltas": { "confidence": 15, "overconfidence": 8 } }
       ]
     },
     {
@@ -105,21 +106,32 @@
       "text": "最近一個月，你查看投資帳戶的頻率、以及看完當下的心情，比較接近：",
       "why_we_ask": "問「你覺得焦慮嗎」很難答得準，人通常低估自己的焦慮。改問看盤頻率這種具體行為，答案比較可靠。",
       "options": [
-        { "label": "一天看好幾次，看完反而更煩", "deltas": { "anxiety": 30 } },
-        { "label": "一天看一次，有點在意", "deltas": { "anxiety": 12 } },
-        { "label": "幾週才看一次，沒什麼感覺", "deltas": { "anxiety": -10, "discipline": 10 } },
-        { "label": "一天看好幾次，但是在找加碼的時機", "deltas": { "confidence": 20, "overconfidence": 12 } }
+        { "label": "一天看好幾次，看完心情會被影響", "deltas": { "anxiety": 30 } },
+        { "label": "一天看一次，會留意但不太受影響", "deltas": { "anxiety": 12 } },
+        { "label": "幾週才想到要看一次", "deltas": { "anxiety": -10, "discipline": 10 } },
+        { "label": "一天看好幾次，在找加碼的時機", "deltas": { "confidence": 20, "overconfidence": 12 } }
       ]
     },
     {
       "item_id": "Q10", "stage": 2, "type": "single_choice", "construct": "behavior",
-      "text": "同事在群組貼出他這季的獲利截圖，數字比你高不少。接下來一週你最可能：",
-      "why_we_ask": "從眾不是看你有沒有參考別人，而是看你把別人的結果當成自己的理由，還是當成一條待查證的線索。",
+      "text": "同事在群組貼出他這季的獲利截圖，數字比你高不少。過去遇到這種情況，你後來通常是：",
+      "why_we_ask": "從眾不是看你有沒有參考別人，而是看你把別人的結果當成自己的理由，還是當成一條待查證的線索。問「過去通常怎麼做」比問「你會怎麼做」不容易美化。",
       "options": [
-        { "label": "私訊問他買什麼，然後跟著買", "deltas": { "herding": 30, "overconfidence": 5 } },
-        { "label": "有點不甘心，但不改變做法", "deltas": { "discipline": 12, "herding": 8 } },
-        { "label": "不受影響，我們的目標和風險承受度不同", "deltas": { "discipline": 20, "herding": -10 } },
-        { "label": "去了解他買的是什麼，再用自己的標準決定要不要買", "deltas": { "discipline": 15, "herding": 2 } }
+        { "label": "問他買什麼，然後也買了一些", "deltas": { "herding": 30, "overconfidence": 5 } },
+        { "label": "沒有跟著買，但接下來一陣子心裡會惦記著", "deltas": { "discipline": 12, "herding": 8 } },
+        { "label": "沒有特別反應，我們買的東西本來就不一樣", "deltas": { "discipline": 20, "herding": -10 } },
+        { "label": "查了他買的標的，最後自己決定買或不買", "deltas": { "discipline": 15, "herding": 2 } }
+      ]
+    },
+    {
+      "item_id": "Q10b", "stage": 2, "type": "single_choice", "construct": "behavior",
+      "text": "兩個標的，你研究過之後覺得條件差不多。A 最近很多人在買、討論度很高；B 幾乎沒人提。你會：",
+      "why_we_ask": "同一個構念換一個角度問。上一題問的是「別人賺錢時你怎麼反應」，這題問的是「人多本身算不算理由」。",
+      "options": [
+        { "label": "買 A，這麼多人買總有道理", "deltas": { "herding": 30 } },
+        { "label": "買 A，但因為太熱門，部位放小一點", "deltas": { "herding": 15, "discipline": 5 } },
+        { "label": "哪個都行，用其他條件決定", "deltas": { "herding": 0, "discipline": 10 } },
+        { "label": "買 B，人少的時候價格通常比較合理", "deltas": { "herding": -5 } }
       ]
     },
     {
@@ -140,6 +152,17 @@
         { "label": "差不多", "deltas": { "disposition": 10 } },
         { "label": "獲利的長很多", "deltas": { "disposition": -10 } },
         { "label": "目前沒有持股，無法比較", "deltas": {} }
+      ]
+    },
+    {
+      "item_id": "Q11b", "stage": 2, "type": "single_choice", "construct": "behavior",
+      "text": "你帳上有兩筆部位，一筆賺 20%、一筆賠 20%。你臨時需要用錢，必須賣掉其中一筆：",
+      "why_we_ask": "這是處分效應的經典測法。兩筆都必須動一筆，選哪一筆會透露你是照當初的理由決定，還是照帳面上的賺賠決定。",
+      "options": [
+        { "label": "賣賺錢的那筆，先把獲利入袋", "deltas": { "disposition": 30 } },
+        { "label": "各賣一半", "deltas": { "disposition": 10 } },
+        { "label": "看哪一筆當初的理由先站不住腳，賣那筆", "deltas": { "disposition": 0, "discipline": 15 } },
+        { "label": "賣賠錢的那筆，認賠出場", "deltas": { "disposition": -10 } }
       ]
     },
     {

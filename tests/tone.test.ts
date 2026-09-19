@@ -76,7 +76,7 @@ describe('rendered narratives state the same facts in every tone', () => {
   }
 
   it('every tone states the same guardrail count', () => {
-    const s = run(responses({ Q11: 0, Q10: 0 }));
+    const s = run(responses({ Q11: 0, Q11b: 0, Q10: 0, Q10b: 0 }));
     expect(s.guardrails.length).toBeGreaterThan(0);
     for (const t of TONES) expect(narrative(s, t, weights).guardrails).toContain(String(s.guardrails.length));
   });

@@ -15,15 +15,15 @@ const mutate = (id: string, f: (it: Record<string, unknown>) => void): ItemBank 
 describe('item bank validation', () => {
   it('the shipped item bank is valid', () => expect(() => validateItemBank(itemBank)).not.toThrow());
 
-  it('has 24 scored questions + 1 attention check + 1 MBTI = 26', () => {
+  it('has 26 scored questions + 1 attention check + 1 MBTI = 28', () => {
     // Q12 (two sub-questions) and Q19 (four) each count as one scored question.
     const scored = [
       'Q00', 'Q01', 'Q02', 'Q03', 'Q04', 'Q05', 'Q06', 'Q07',
-      'Q08', 'Q09', 'Q10', 'Q11', 'Q12', 'Q13', 'Q14',
+      'Q08', 'Q09', 'Q10', 'Q10b', 'Q11', 'Q11b', 'Q12', 'Q13', 'Q14',
       'Q15', 'Q15b', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q20b', 'Q21',
     ];
     const ids = new Set(itemBank.items.map((i) => i.item_id));
-    expect(scored.filter((id) => ids.has(id))).toHaveLength(24);
+    expect(scored.filter((id) => ids.has(id))).toHaveLength(26);
     // Every scored item is in that list: a new question must be counted, not just added.
     // Sub-questions, plus Q16_17 which is derived from two questions already listed.
     const counted = new Set([...scored, 'Q12a', 'Q12b', 'Q19a', 'Q19b', 'Q19c', 'Q19d', 'Q16_17']);
