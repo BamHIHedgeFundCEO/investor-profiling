@@ -65,6 +65,16 @@ describe('item bank validation', () => {
     expect(() => validateItemBank(b2)).toThrow(/needs a value/);
   });
 
+  // Stage 1 and 3 ask for facts and preferences, so explaining why the question
+  // matters helps and gives nothing away. Stage 2 measures biases, and telling a
+  // respondent what a bias question is looking for is handing them the answer —
+  // it would undo the option neutralisation in README §25.
+  it('Stage 2 questions explain nothing about how they are scored', () => {
+    for (const it of itemBank.items.filter((i) => i.stage === 2)) {
+      expect('why_we_ask' in it ? it.why_we_ask : undefined, it.item_id).toBeUndefined();
+    }
+  });
+
   it('Stage 2 items never carry facet values (fast variables stay out of capacity/willingness)', () => {
     for (const it of itemBank.items.filter((i) => i.stage === 2)) {
       expect(it.type === 'single_choice' ? it.construct : 'behavior').toBe('behavior');

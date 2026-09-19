@@ -1,5 +1,5 @@
 {
-  "version": "1.9.0",
+  "version": "1.10.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -93,7 +93,6 @@
     {
       "item_id": "Q08", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "你放了 50 萬進去。一個月後打開 App，剩 40 萬。同一天，你看到三則新聞說這波還沒跌完。你的第一個動作是：",
-      "why_we_ask": "這題沒有標準答案。四種做法在不同情況下都有人用，我們看的是你傾向哪一種，不是哪一種比較高明。",
       "options": [
         { "label": "先全部出場，等看清楚再決定要不要回來", "deltas": { "loss_aversion": 30, "anxiety": 25 } },
         { "label": "先賣掉一部分，留一部分繼續放著", "deltas": { "loss_aversion": 12, "anxiety": 10 } },
@@ -104,7 +103,6 @@
     {
       "item_id": "Q09", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "最近一個月，你查看投資帳戶的頻率、以及看完當下的心情，比較接近：",
-      "why_we_ask": "問「你覺得焦慮嗎」很難答得準，人通常低估自己的焦慮。改問看盤頻率這種具體行為，答案比較可靠。",
       "options": [
         { "label": "一天看好幾次，看完心情會被影響", "deltas": { "anxiety": 30 } },
         { "label": "一天看一次，會留意但不太受影響", "deltas": { "anxiety": 12 } },
@@ -115,7 +113,6 @@
     {
       "item_id": "Q10", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "同事在群組貼出他這季的獲利截圖，數字比你高不少。過去遇到這種情況，你後來通常是：",
-      "why_we_ask": "從眾不是看你有沒有參考別人，而是看你把別人的結果當成自己的理由，還是當成一條待查證的線索。問「過去通常怎麼做」比問「你會怎麼做」不容易美化。",
       "options": [
         { "label": "問他買什麼，然後也買了一些", "deltas": { "herding": 30, "overconfidence": 5 } },
         { "label": "沒有跟著買，但接下來一陣子心裡會惦記著", "deltas": { "discipline": 12, "herding": 8 } },
@@ -126,7 +123,6 @@
     {
       "item_id": "Q10b", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "你研究過一個標的，覺得它被高估了，決定不買。接下來兩週它一直漲，群組裡大家都在討論，說還會再漲。你會：",
-      "why_we_ask": "從眾的定義是放棄自己的判斷去跟隨別人，所以人群必須和你的判斷相反，這題才測得到它。四個選項都有人會這樣做，也都說得出道理。",
       "options": [
         { "label": "進場買一些，漲成這樣，市場應該有我沒看到的東西", "deltas": { "herding": 30 } },
         { "label": "先買一點點，怕完全錯過", "deltas": { "herding": 20 } },
@@ -157,7 +153,6 @@
     {
       "item_id": "Q11b", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "你帳上有兩筆部位，一筆賺 20%、一筆賠 20%。你臨時需要用錢，必須賣掉其中一筆：",
-      "why_we_ask": "處分效應的經典測法（Shefrin & Statman）。刻意只有三個選項、而且沒有「看基本面再決定」這種出口——強迫在贏家與輸家之間選，才逼得出傾向。",
       "options": [
         { "label": "賣賺錢的那筆，先把獲利入袋", "deltas": { "disposition": 30 } },
         { "label": "各賣一半", "deltas": { "disposition": 10 } },
@@ -347,7 +342,7 @@
     {
       "item_id": "Q20b", "stage": 3, "type": "single_choice", "construct": "competence", "facet": "tenure",
       "text": "你實際持有投資部位（股票、基金、ETF 等）大約多久了？",
-      "why_we_ask": "年資不等於實力，但待得夠久的人看過比較多種市場狀況。它和上一題分開計分，因為「撐過一次大跌」和「投資很多年」是兩件事。",
+      "why_we_ask": "待得越久，看過的市場狀況越多種，對波動的預期也比較接近真實。",
       "options": [
         { "label": "還沒開始", "value": 0 },
         { "label": "不到 1 年", "value": 25 },
