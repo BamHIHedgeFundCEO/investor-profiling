@@ -1,5 +1,5 @@
 {
-  "version": "1.8.0",
+  "version": "1.9.0",
   "items": [
     {
       "item_id": "Q00", "stage": 1, "type": "single_choice", "construct": "capacity", "facet": "life_stage",
@@ -125,13 +125,13 @@
     },
     {
       "item_id": "Q10b", "stage": 2, "type": "single_choice", "construct": "behavior",
-      "text": "兩個標的，你研究過之後覺得條件差不多。A 最近很多人在買、討論度很高；B 幾乎沒人提。你會：",
-      "why_we_ask": "同一個構念換一個角度問。上一題問的是「別人賺錢時你怎麼反應」，這題問的是「人多本身算不算理由」。",
+      "text": "你研究過一個標的，覺得它被高估了，決定不買。接下來兩週它一直漲，群組裡大家都在討論，說還會再漲。你會：",
+      "why_we_ask": "從眾的定義是放棄自己的判斷去跟隨別人，所以人群必須和你的判斷相反，這題才測得到它。四個選項都有人會這樣做，也都說得出道理。",
       "options": [
-        { "label": "買 A，這麼多人買總有道理", "deltas": { "herding": 30 } },
-        { "label": "買 A，但因為太熱門，部位放小一點", "deltas": { "herding": 15, "discipline": 5 } },
-        { "label": "哪個都行，用其他條件決定", "deltas": { "herding": 0, "discipline": 10 } },
-        { "label": "買 B，人少的時候價格通常比較合理", "deltas": { "herding": -5 } }
+        { "label": "進場買一些，漲成這樣，市場應該有我沒看到的東西", "deltas": { "herding": 30 } },
+        { "label": "先買一點點，怕完全錯過", "deltas": { "herding": 20 } },
+        { "label": "不買，但接下來會一直盯著它的價格", "deltas": { "herding": 8 } },
+        { "label": "不買，我當初的理由沒有變", "deltas": { "herding": -5 } }
       ]
     },
     {
@@ -157,11 +157,10 @@
     {
       "item_id": "Q11b", "stage": 2, "type": "single_choice", "construct": "behavior",
       "text": "你帳上有兩筆部位，一筆賺 20%、一筆賠 20%。你臨時需要用錢，必須賣掉其中一筆：",
-      "why_we_ask": "這是處分效應的經典測法。兩筆都必須動一筆，選哪一筆會透露你是照當初的理由決定，還是照帳面上的賺賠決定。",
+      "why_we_ask": "處分效應的經典測法（Shefrin & Statman）。刻意只有三個選項、而且沒有「看基本面再決定」這種出口——強迫在贏家與輸家之間選，才逼得出傾向。",
       "options": [
         { "label": "賣賺錢的那筆，先把獲利入袋", "deltas": { "disposition": 30 } },
         { "label": "各賣一半", "deltas": { "disposition": 10 } },
-        { "label": "看哪一筆當初的理由先站不住腳，賣那筆", "deltas": { "disposition": 0, "discipline": 15 } },
         { "label": "賣賠錢的那筆，認賠出場", "deltas": { "disposition": -10 } }
       ]
     },

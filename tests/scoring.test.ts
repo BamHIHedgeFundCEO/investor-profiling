@@ -13,7 +13,7 @@ import { rawBehavior } from '../src/lib/scoring/behavior';
 import { enumerateComposite, scoreOverconfidence } from '../src/lib/scoring/rules';
 import { indexItems } from '../src/lib/scoring/util';
 import { BIAS_DIMS } from '../src/lib/scoring/types';
-import type { CompositeItem, OverconfidenceInteractionItem } from '../src/lib/scoring/types';
+import type { BehaviorDim, CompositeItem, OverconfidenceInteractionItem } from '../src/lib/scoring/types';
 import { itemBank, responses, run, textInput, weights } from './helpers';
 
 const byId = indexItems(itemBank);
@@ -166,7 +166,7 @@ describe('theoretical ranges are derived from the item bank', () => {
       loss_aversion: { min: 0, max: 100 },
       overconfidence: { min: 0, max: 55 },
       herding: { min: -15, max: 60 },
-      discipline: { min: 0, max: 78 },
+      discipline: { min: 0, max: 53 },
       confidence: { min: 0, max: 60 },
       disposition: { min: -20, max: 60 },
     });
@@ -424,17 +424,22 @@ describe('guardrails', () => {
   });
 
   // herding and disposition each used to rest on one question, which meant one
-  // option of one question locked a guardrail on its own. Two items each now,
-  // and the worst answer to either one is not enough by itself.
+  // option of one question locked a guardrail on its own. Two items each now, and
+  // the worst answer to one, paired with the least loaded answer to the other, is
+  // not enough on its own. Both items have to lean the same way.
   it('no single question can trip a guardrail on its own', () => {
+    const lowestOption = (id: string, dim: BehaviorDim) => {
+      const item = byId.get(id) as { options: { deltas?: Partial<Record<BehaviorDim, number>> }[] };
+      const vals = item.options.map((o) => o.deltas?.[dim] ?? 0);
+      return vals.indexOf(Math.min(...vals));
+    };
     for (const [only, other, dim] of [
       ['Q10', 'Q10b', 'herding'],
       ['Q10b', 'Q10', 'herding'],
       ['Q11', 'Q11b', 'disposition'],
       ['Q11b', 'Q11', 'disposition'],
     ] as const) {
-      const neutral = dim === 'herding' ? 2 : 2; // the option contributing 0 to that dimension
-      const s = run(responses({ [only]: 0, [other]: neutral }));
+      const s = run(responses({ [only]: 0, [other]: lowestOption(other, dim) }));
       expect(s.behavior[dim].tier, `${only} alone`).not.toBe('high');
     }
     expect(run(responses({ Q10: 0, Q10b: 0 })).behavior.herding.tier).toBe('high');
@@ -463,8 +468,12 @@ describe('flags and alert', () => {
   });
 
   it('straight-lining is detected in Stage 2–3 only', () => {
+    // Built from the bank rather than a hand-kept list, so adding a question
+    // cannot quietly stop this test from testing anything.
     const allFirst = Object.fromEntries(
-      ['Q08', 'Q09', 'Q10', 'AC1', 'Q11', 'Q12a', 'Q12b', 'Q21', 'Q15', 'Q18', 'Q15b', 'Q19a', 'Q19b', 'Q20'].map((k) => [k, 0]),
+      itemBank.items
+        .filter((i) => (i.stage === 2 || i.stage === 3) && 'options' in i && i.options)
+        .map((i) => [i.item_id, 0]),
     );
     expect(run(responses(allFirst)).flags).toContain('straight_lining_flag');
     const stage1Same = { Q01: 3, Q02: 3, Q03: 3, Q04: 3, Q05: 3 };

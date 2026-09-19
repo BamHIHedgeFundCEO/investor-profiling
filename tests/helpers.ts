@@ -4,6 +4,9 @@ import type { Responses, TextInput } from '../src/lib/scoring/types';
 import type { BehaviorScores, TextQuality } from '../src/lib/analyzer/types';
 
 // A mid-range respondent; tests override only the answers they care about.
+// Q11b deliberately breaks the run of index-1 answers through Q11/Q12a/Q12b/Q21:
+// five in a row trips straight_lining_flag, which would then show up in every
+// test that did not ask for it.
 export const BASE_PICKS: Record<string, number> = {
   Q00: 1, Q01: 2, Q02: 2, Q03: 2, Q04: 2, Q05: 2, Q06: 1, Q07: 1,
   Q08: 2, Q09: 1, Q10: 2, Q10b: 2, AC1: 2, Q11: 1, Q11b: 2, Q12a: 1, Q12b: 1,
