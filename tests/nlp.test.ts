@@ -53,6 +53,42 @@ describe('rule-based analyzer', () => {
     expect(afraid.sentiment.anxiety.score).toBeGreaterThan(50);
   });
 
+  // Overconfidence is miscalibration about oneself, not conviction about the
+  // world. A respondent who states a well-supported fact was being told they were
+  // arrogant for being right, and said so.
+  it('a confident statement about the world is not overconfidence', () => {
+    const fact = analyzeRules(
+      ans('大盤長期向上 所以投資股票 大盤可以 這是歷史數據證明的事實 我看過很多資料'),
+      ans('不會改變 因為長期趨勢跟短期波動是兩件事'),
+    );
+    expect(fact.overconfidence.evidence).toEqual([]); // nothing to quote → nothing to claim
+
+    const aboutSelf = analyzeRules(
+      ans('我一定能選到會漲的那幾檔 我對自己的判斷很有把握 不需要分散'),
+      ans('不會改變 我很確定自己看得準'),
+    );
+    expect(aboutSelf.overconfidence.tier).toBe('high');
+
+    const prediction = analyzeRules(ans('比特幣絕對會漲到 50 萬鎂，我會全部投進去。'), ans('不會改變。'));
+    expect(prediction.overconfidence.tier).toBe('high');
+  });
+
+  // 「不需要分散」 rejects a practice and is not a reason; 「沒有現金流」 asserts a
+  // fact about the asset and is one. Both carry a negation, so negation alone
+  // cannot separate them — an earlier version excluded both and made the rule
+  // analyzer disagree with a frozen annotation (F11).
+  it('a dismissed mechanism is not depth, but an asserted absence is', () => {
+    const dismissed = analyzeRules(ans('我一定會賺，不需要看本益比也不用管營收。'), ans('不會改變。'));
+    expect(dismissed.overconfidence.tier).toBe('high');
+
+    const asserted = analyzeRules(
+      ans('它沒有現金流，價格幾乎都是情緒推動的，所以我不會投資。'),
+      ans('不會改變。'),
+    );
+    expect(asserted.reasoning_mode).toBe('mechanism');
+    expect(asserted.overconfidence.tier).not.toBe('high');
+  });
+
   it('"絕對會漲到 50 萬鎂": price numbers do not count as evidence', () => {
     const s = analyzeRules(ans('絕對會漲到 50 萬鎂，我朋友去年翻三倍。'), ans('不會改變。'));
     expect(s.overconfidence.tier).toBe('high');
