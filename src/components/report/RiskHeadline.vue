@@ -67,9 +67,7 @@ const emotionClass = computed(
         </dd>
       </div>
     </dl>
-
-    <p class="mt-4 rounded-lg border border-slate-200 px-4 py-3 text-sm leading-relaxed whitespace-pre-line text-slate-700">
-      {{ text.binding }}
-    </p>
+    <!-- text.binding and text.lift belong to LiftPanel, which has room for the
+         constraint comparison and the lever list the sentence refers to. -->
   </section>
 </template>

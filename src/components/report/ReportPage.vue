@@ -4,6 +4,7 @@
 import { computed, defineAsyncComponent, ref } from 'vue';
 import RiskHeadline from './RiskHeadline.vue';
 import RadarChart from './RadarChart.vue';
+import LiftPanel from './LiftPanel.vue';
 import ContradictionAlert from './ContradictionAlert.vue';
 import BiasBars from './BiasBars.vue';
 import TextAnalysisPanel from './TextAnalysisPanel.vue';
@@ -61,7 +62,10 @@ const pairedDemo = computed(() => survey.demoId === 'calm' || survey.demoId === 
     </aside>
 
     <RadarChart :s="s" />
+    <!-- After the contradiction, never before it: the lift panel is advice, and the
+         spec puts the capacity/willingness contradiction ahead of any advice. -->
     <ContradictionAlert v-if="text.contradiction" :text="text.contradiction" />
+    <LiftPanel :s="s" :text="text" />
     <BiasBars :s="s" />
     <TextAnalysisPanel :s="s" />
     <GuardrailList :s="s" :intro="text.guardrails" />

@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "_note": "每個 facet 能不能被受測者改變，以及該怎麼改。kind=action 是現在就能做的事；kind=time 只能靠時間或市場給；kind=fixed 不是槓桿，不該叫人去改。只有 action 與 time 會被列進提升建議，fixed 一律不列。",
+  "_kinds": {
+    "action": "受測者現在就能採取的行動",
+    "time": "只能由時間或市場帶來，沒有捷徑",
+    "fixed": "不是槓桿：不該為了提高風險分數而改變的事"
+  },
+  "facets": {
+    "life_stage": {
+      "label": "年齡",
+      "kind": "fixed",
+      "action": "年齡不是能調整的項目。"
+    },
+    "horizon": {
+      "label": "投資期限",
+      "kind": "action",
+      "action": "把這筆錢的預計動用時間往後延，或改用另一筆短期內不會動到的錢來投資。期限是財務條件裡權重最高的一項。"
+    },
+    "liquidity": {
+      "label": "緊急預備金",
+      "kind": "action",
+      "action": "先把不動用這筆投資、也能支應 6 個月生活支出的存款補起來。"
+    },
+    "concentration": {
+      "label": "資產集中度",
+      "kind": "action",
+      "action": "降低這筆錢佔可投資淨資產的比例——分批投入，或先累積其他資產。"
+    },
+    "income_stability": {
+      "label": "收入穩定度",
+      "kind": "fixed",
+      "action": "收入型態不該為了提高投資分數而改變。"
+    },
+    "surplus": {
+      "label": "每月結餘率",
+      "kind": "action",
+      "action": "提高每月收入減支出後的結餘比例。結餘愈高，下跌時愈不需要賣掉部位來支應生活。"
+    },
+    "burden": {
+      "label": "固定負擔",
+      "kind": "action",
+      "action": "先清償利率高於預期報酬的貸款。還掉負債的報酬是確定的，投資的不是。"
+    },
+    "disruption": {
+      "label": "3 年內的大額支出",
+      "kind": "fixed",
+      "action": "購屋、結婚、學費的時程不該為了投資而更動。"
+    },
+    "knowledge": {
+      "label": "基礎知識",
+      "kind": "action",
+      "action": "補足利率與債券價格的關係、ETF 費用、分散投資、跌幅與回本的不對稱這幾個概念。這是四項裡唯一能靠讀書就補起來的。"
+    },
+    "experience": {
+      "label": "市場經驗",
+      "kind": "time",
+      "action": "完整經歷一次 20% 以上的回檔並持有到結束。沒有捷徑，也不值得為了拿分去製造一次。"
+    },
+    "tenure": {
+      "label": "持有年數",
+      "kind": "time",
+      "action": "持續持有部位，年數自己會累積。"
+    },
+    "risk_tolerance": {
+      "label": "可承受跌幅",
+      "kind": "fixed",
+      "action": "這是偏好，不是缺陷。"
+    },
+    "risk_range": {
+      "label": "可接受的價值區間",
+      "kind": "fixed",
+      "action": "這是偏好，不是缺陷。"
+    },
+    "goal": {
+      "label": "投資目標",
+      "kind": "fixed",
+      "action": "這是偏好，不是缺陷。"
+    }
+  }
+}

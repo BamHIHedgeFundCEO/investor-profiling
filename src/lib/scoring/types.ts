@@ -197,6 +197,10 @@ export interface Weights {
     // because the sentence has no room for them — so the text reading is
     // mechanically inflated and is not used below this many characters.
     depth_floor_chars: number;
+    // Below this many points, "your ceiling could rise by N" is noise: a fifth of
+    // a simulated population sits under 3 points of headroom, where the sentence
+    // reads as advice but names a change no one would feel.
+    headroom_material: number;
   };
   framing_pair: [string, string];
   target_vol: { min: number; span: number };

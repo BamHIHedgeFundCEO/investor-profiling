@@ -49,7 +49,8 @@
     "inconsistency_gap": 20,
     "capacity_willingness_gap": 25,
     "framing_gap": 50,
-    "depth_floor_chars": 40
+    "depth_floor_chars": 40,
+    "headroom_material": 3
   },
   "framing_pair": [
     "Q15",
